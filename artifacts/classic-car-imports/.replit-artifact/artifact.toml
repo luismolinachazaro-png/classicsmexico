@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Classic Car Imports"
+description = "A premium classic-car import website for buyers in Mexico, featuring available inventory, sold vehicles, USA-to-Mexico transport services, and inquiry flows."
+version = "1.0.0"
+id = "artifacts/classic-car-imports"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18516
+
+[services.development]
+run = "pnpm --filter @workspace/classic-car-imports run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/classic-car-imports", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/classic-car-imports/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18516"
+BASE_PATH = "/"

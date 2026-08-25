@@ -1,0 +1,1 @@
+- [API schema compatibility](api-schema-compatibility.md) — keep generated contracts compatible with the workspace's Zod runtime before wiring routes.

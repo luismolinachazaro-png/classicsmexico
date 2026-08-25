@@ -10,6 +10,14 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: inventory
+    description: Vehicle inventory operations
+  - name: services
+    description: Import and transport service operations
+  - name: inquiries
+    description: Customer inquiry operations
+  - name: overview
+    description: Public website summary operations
 paths:
   /healthz:
     get:
@@ -24,6 +32,123 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /inventory:
+    get:
+      operationId: listInventory
+      tags: [inventory]
+      summary: List available inventory
+      parameters:
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: bodyStyle
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [featured, newest, price-low, price-high]
+      responses:
+        "200":
+          description: Available vehicles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Vehicle"
+  /inventory/{slug}:
+    get:
+      operationId: getInventoryVehicle
+      tags: [inventory]
+      summary: Get an available vehicle by slug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Vehicle details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vehicle"
+        "404":
+          description: Vehicle not found
+  /sold:
+    get:
+      operationId: listSoldVehicles
+      tags: [inventory]
+      summary: List recently sold vehicles
+      parameters:
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Sold vehicles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SoldVehicle"
+  /services:
+    get:
+      operationId: listServices
+      tags: [services]
+      summary: List import services
+      responses:
+        "200":
+          description: Import service offerings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ImportService"
+  /site-summary:
+    get:
+      operationId: getSiteSummary
+      tags: [overview]
+      summary: Get public site summary
+      responses:
+        "200":
+          description: Summary statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SiteSummary"
+  /inquiries:
+    post:
+      operationId: createInquiry
+      tags: [inquiries]
+      summary: Submit a vehicle or transport inquiry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InquiryInput"
+      responses:
+        "201":
+          description: Inquiry received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Inquiry"
+        "400":
+          description: Invalid inquiry
 components:
   schemas:
     HealthStatus:
@@ -33,4 +158,75 @@ components:
           type: string
       required:
         - status
+    Vehicle:
+      type: object
+      required: [id, slug, year, make, model, price, mileage, location, bodyStyle, transmission, engine, imageUrl, description, featured]
+      properties:
+        id: { type: number }
+        slug: { type: string }
+        year: { type: number }
+        make: { type: string }
+        model: { type: string }
+        price: { type: number }
+        mileage: { type: number }
+        location: { type: string }
+        bodyStyle: { type: string }
+        transmission: { type: string }
+        engine: { type: string }
+        imageUrl: { type: string }
+        description: { type: string }
+        featured: { type: boolean }
+    SoldVehicle:
+      type: object
+      required: [id, year, make, model, soldDate, imageUrl, location]
+      properties:
+        id: { type: number }
+        year: { type: number }
+        make: { type: string }
+        model: { type: string }
+        soldDate: { type: string }
+        imageUrl: { type: string }
+        location: { type: string }
+    ImportService:
+      type: object
+      required: [id, name, description, details]
+      properties:
+        id: { type: number }
+        name: { type: string }
+        description: { type: string }
+        details:
+          type: array
+          items: { type: string }
+    SiteSummary:
+      type: object
+      required: [availableCount, soldCount, yearsExperience, statesCovered]
+      properties:
+        availableCount: { type: number }
+        soldCount: { type: number }
+        yearsExperience: { type: number }
+        statesCovered: { type: number }
+    InquiryInput:
+      type: object
+      required: [name, email, inquiryType, message]
+      properties:
+        name: { type: string, minLength: 2 }
+        email: { type: string, minLength: 3 }
+        phone: { type: ["string", "null"] }
+        vehicleSlug: { type: ["string", "null"] }
+        inquiryType:
+          type: string
+          enum: [vehicle, transport, general]
+        message: { type: string, minLength: 10 }
+    Inquiry:
+      type: object
+      required: [id, name, email, message, inquiryType, createdAt]
+      properties:
+        id: { type: number }
+        name: { type: string }
+        email: { type: string }
+        phone: { type: ["string", "null"] }
+        vehicleSlug: { type: ["string", "null"] }
+        inquiryType: { type: string }
+        message: { type: string }
+        createdAt: { type: string }
 
