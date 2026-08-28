@@ -38,6 +38,12 @@ const services = [
     description: "Te acompañamos con documentos, aduana y registro para que el auto llegue listo para México.",
     details: ["Preparación de documentos", "Coordinación con agente aduanal", "Orientación para legalización y registro"],
   },
+  {
+    id: 4,
+    name: "Entrega en cualquier estado de México",
+    description: "Cuando el auto está listo, coordinamos su traslado hasta la ciudad y dirección que indiques.",
+    details: ["Salida desde aduana o punto de resguardo", "Ruta y tiempo estimado de entrega", "Seguimiento hasta confirmar la recepción"],
+  },
 ];
 
 router.get("/inventory", async (req, res): Promise<void> => {
