@@ -83,7 +83,7 @@ function Shell({ children }: { children: ReactNode }) {
                 {link.label}
               </Link>
             ))}
-            <InquiryDialog triggerLabel="Platica con nosotros" />
+            <InquiryDialog triggerLabel="Plática con nosotros" />
           </nav>
           <button
             type="button"
@@ -109,7 +109,7 @@ function Shell({ children }: { children: ReactNode }) {
                   {link.label}
                 </Link>
               ))}
-              <InquiryDialog triggerLabel="Platica con nosotros" fullWidth />
+              <InquiryDialog triggerLabel="Plática con nosotros" fullWidth />
             </nav>
           </div>
         )}
@@ -251,7 +251,7 @@ function InquiryDialog({ triggerLabel, vehicleSlug, inquiryType = 'general', ful
   const close = () => { setOpen(false); setSubmitted(false); setForm({ name: '', email: '', phone: '', message: '' }); };
   return (
     <>
-      <button type="button" onClick={() => setOpen(true)} data-testid={`button-inquiry-${inquiryType}`} className={`${fullWidth ? 'w-full' : ''} inline-flex items-center justify-center gap-2 bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground hover:-translate-y-0.5 hover:bg-primary/90`}>
+      <button type="button" onClick={() => setOpen(true)} data-testid={`button-inquiry-${inquiryType}`} className={`${fullWidth ? 'w-full' : ''} inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground hover:-translate-y-0.5 hover:bg-primary/90`}>
         {triggerLabel}<ArrowRight size={16} />
       </button>
       {open && (
