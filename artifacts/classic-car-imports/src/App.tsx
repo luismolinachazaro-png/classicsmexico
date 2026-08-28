@@ -83,7 +83,6 @@ function Shell({ children }: { children: ReactNode }) {
                 {link.label}
               </Link>
             ))}
-            <InquiryDialog triggerLabel="Plática con nosotros" />
           </nav>
           <button
             type="button"
@@ -109,7 +108,6 @@ function Shell({ children }: { children: ReactNode }) {
                   {link.label}
                 </Link>
               ))}
-              <InquiryDialog triggerLabel="Plática con nosotros" fullWidth />
             </nav>
           </div>
         )}
