@@ -255,8 +255,8 @@ function InquiryDialog({ triggerLabel, vehicleSlug, inquiryType = 'general', ful
         {triggerLabel}<ArrowRight size={16} />
       </button>
       {open && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-secondary/70 p-0 backdrop-blur-sm sm:items-center sm:p-5" role="dialog" aria-modal="true" aria-label="Iniciar conversación" data-testid="dialog-inquiry">
-          <div className="max-h-[92dvh] w-full max-w-xl overflow-y-auto border border-border bg-card p-6 shadow-2xl sm:p-8">
+        <div className="fixed inset-0 z-[60] overflow-y-auto bg-secondary/70 p-3 backdrop-blur-sm sm:p-5" role="dialog" aria-modal="true" aria-label="Iniciar conversación" data-testid="dialog-inquiry">
+          <div className="mx-auto my-1 max-h-[calc(100dvh-1.5rem)] w-full max-w-xl overflow-y-auto overscroll-contain border border-border bg-card p-6 shadow-2xl sm:my-0 sm:max-h-[calc(100dvh-2.5rem)] sm:p-8">
             <div className="flex items-start justify-between gap-5">
               <div><p className="label-mono text-primary">Atención personalizada</p><h2 className="display-serif mt-2 text-3xl">Cuéntanos qué necesitas.</h2></div>
               <button type="button" onClick={close} aria-label="Cerrar formulario de contacto" data-testid="button-close-inquiry" className="p-1 text-muted-foreground hover:text-foreground"><X size={20} /></button>
