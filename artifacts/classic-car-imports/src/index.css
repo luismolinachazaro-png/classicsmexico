@@ -88,17 +88,17 @@
   --sidebar: 161 31% 17%;
   --sidebar-foreground: 39 35% 93%;
   --sidebar-border: 161 22% 29%;
-  --sidebar-primary: 17 46% 47%;
+  --sidebar-primary: 156 30% 24%;
   --sidebar-primary-foreground: 39 35% 93%;
-  --sidebar-accent: 161 24% 25%;
+  --sidebar-accent: 156 26% 22%;
   --sidebar-accent-foreground: 39 35% 93%;
   --sidebar-ring: 17 46% 47%;
   --popover: 40 38% 96%;
   --popover-foreground: 161 28% 15%;
   --popover-border: 37 22% 79%;
-  --primary: 17 46% 47%;
+  --primary: 156 30% 24%;
   --primary-foreground: 39 35% 93%;
-  --secondary: 161 24% 25%;
+  --secondary: 156 34% 14%;
   --secondary-foreground: 39 35% 93%;
   --muted: 37 25% 86%;
   --muted-foreground: 161 13% 42%;
@@ -107,9 +107,9 @@
   --destructive: 5 65% 46%;
   --destructive-foreground: 39 35% 93%;
   --input: 37 22% 79%;
-  --ring: 17 46% 47%;
-  --chart-1: 17 46% 47%;
-  --chart-2: 161 31% 17%;
+  --ring: 156 30% 24%;
+  --chart-1: 156 30% 24%;
+  --chart-2: 156 34% 14%;
   --chart-3: 43 68% 59%;
   --chart-4: 38 45% 65%;
   --chart-5: 5 65% 46%;
@@ -209,17 +209,17 @@
   --sidebar: 161 34% 9%;
   --sidebar-foreground: 39 35% 93%;
   --sidebar-border: 161 22% 21%;
-  --sidebar-primary: 17 46% 55%;
+  --sidebar-primary: 156 30% 38%;
   --sidebar-primary-foreground: 39 35% 93%;
-  --sidebar-accent: 161 24% 19%;
+  --sidebar-accent: 156 26% 18%;
   --sidebar-accent-foreground: 39 35% 93%;
   --sidebar-ring: 17 46% 55%;
   --popover: 161 27% 16%;
   --popover-foreground: 39 35% 93%;
   --popover-border: 161 22% 29%;
-  --primary: 17 46% 55%;
+  --primary: 156 30% 38%;
   --primary-foreground: 39 35% 93%;
-  --secondary: 161 24% 25%;
+  --secondary: 156 28% 20%;
   --secondary-foreground: 39 35% 93%;
   --muted: 161 20% 21%;
   --muted-foreground: 39 17% 72%;
@@ -230,8 +230,8 @@
 
   /* Used as the border around inputs. Dark mode: Should be a border that is light enough to have high contrast when rendered on a --card background. More contrast than standard --border */
   --input: 161 22% 29%;
-  --ring: 17 46% 55%;
-  --chart-1: 17 46% 55%;
+  --ring: 156 30% 38%;
+  --chart-1: 156 30% 38%;
   --chart-2: 43 68% 59%;
   --chart-3: 39 35% 74%;
   --chart-4: 5 65% 55%;

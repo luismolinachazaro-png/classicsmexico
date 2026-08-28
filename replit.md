@@ -1,6 +1,6 @@
-# Carril & Co. Classic Imports
+# Classics Mexico
 
-Carril & Co. showcases distinctive classic cars sourced in the USA and helps buyers in Mexico manage transport and import.
+Classics Mexico presenta autos clásicos importados y legalizados para clientes en México, con traslado nacional y apoyo para importar desde Estados Unidos o Europa.
 
 ## Run & Operate
 
@@ -23,7 +23,7 @@ Carril & Co. showcases distinctive classic cars sourced in the USA and helps buy
 ## Where things live
 
 - `artifacts/classic-car-imports/src/App.tsx` — public website routes and shared UI
-- `artifacts/classic-car-imports/src/index.css` — Carril & Co. visual tokens and global styling
+- `artifacts/classic-car-imports/src/index.css` — Classics Mexico visual tokens and global styling
 - `lib/api-spec/openapi.yaml` — source of truth for inventory, sold cars, services, summary, and inquiries
 - `artifacts/api-server/src/routes/classic-cars.ts` — API handlers for the public site
 - `lib/db/src/schema/index.ts` — PostgreSQL tables for vehicles, sold vehicles, and inquiries
@@ -36,7 +36,7 @@ Carril & Co. showcases distinctive classic cars sourced in the USA and helps buy
 
 ## Product
 
-The site presents available classic vehicles, a sold-car archive, USA-to-Mexico transport and import services, and a persisted inquiry form for prospective buyers.
+The site presents available classic vehicles and a sold-car archive. Transport within Mexico and international sourcing/import services have separate pages and distinct customer journeys.
 
 ## User preferences
 

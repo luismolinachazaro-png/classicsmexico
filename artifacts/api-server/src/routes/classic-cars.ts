@@ -22,21 +22,21 @@ const router: IRouter = Router();
 const services = [
   {
     id: 1,
-    name: "Sourcing & inspection",
-    description: "We find the right car and verify its story before it moves.",
-    details: ["Nationwide USA sourcing", "Condition and title review", "Photo and video walkthroughs"],
+    name: "Búsqueda y revisión",
+    description: "Encontramos el auto correcto y verificamos su historia antes de moverlo.",
+    details: ["Búsqueda en Estados Unidos y Europa", "Revisión de condición y título", "Recorrido en fotos y video"],
   },
   {
     id: 2,
-    name: "Secure transport",
-    description: "A coordinated route from the seller’s driveway to your door in Mexico.",
-    details: ["Enclosed or open carrier options", "Border crossing coordination", "Real-time shipment updates"],
+    name: "Traslado seguro en México",
+    description: "Coordinamos la recolección, el traslado y la entrega de tu auto dentro de México.",
+    details: ["Grúa y transporte nacional", "Entrega en cualquier estado de México", "Actualizaciones durante el traslado"],
   },
   {
     id: 3,
-    name: "Import support",
-    description: "Clear guidance through paperwork, customs, and delivery.",
-    details: ["Document preparation", "Customs broker coordination", "Final delivery anywhere in Mexico"],
+    name: "Importación y legalización",
+    description: "Te acompañamos con documentos, aduana y registro para que el auto llegue listo para México.",
+    details: ["Preparación de documentos", "Coordinación con agente aduanal", "Orientación para legalización y registro"],
   },
 ];
 
@@ -91,7 +91,7 @@ router.get("/inventory/:slug", async (req, res): Promise<void> => {
     .where(eq(vehiclesTable.slug, parsed.data.slug));
 
   if (!vehicle) {
-    res.status(404).json({ error: "Vehicle not found" });
+    res.status(404).json({ error: "Auto no encontrado" });
     return;
   }
 
@@ -150,7 +150,7 @@ router.post("/inquiries", async (req, res): Promise<void> => {
   }
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(parsed.data.email)) {
-    res.status(400).json({ error: "Please provide a valid email address" });
+    res.status(400).json({ error: "Escribe un correo electrónico válido" });
     return;
   }
 
