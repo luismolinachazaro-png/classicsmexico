@@ -429,7 +429,7 @@ function SoldDetail() {
     <div className="page-enter">
       <section className="bg-secondary text-secondary-foreground">
         <div className="mx-auto max-w-[1440px] px-5 pb-12 pt-8 sm:px-8 lg:px-12 lg:pb-20">
-          <Link href="/sold" className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.12em] text-secondary-foreground/65 hover:text-accent"><ChevronLeft size={15} />Volver a autos vendidos</Link>
+          <Link href="/inventory#sold-archive" className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.12em] text-secondary-foreground/65 hover:text-accent"><ChevronLeft size={15} />Volver a autos vendidos</Link>
           <div className="mt-8 grid gap-10 lg:grid-cols-[.82fr_1.18fr] lg:items-center">
             <div>
               <p className="label-mono text-accent">Vendido · {vehicle.year}</p>
@@ -490,7 +490,6 @@ function Seo() {
     const pages: Record<string, [string, string]> = {
       '/': ['Classics Mexico — Autos clásicos importados', 'Autos clásicos seleccionados en Estados Unidos y Europa, legalizados y entregados en México.'],
       '/inventory': ['Autos disponibles — Classics Mexico', 'Conoce autos clásicos importados, legalizados y disponibles para clientes en México.'],
-      '/sold': ['Autos vendidos — Classics Mexico', 'Conoce algunos de los autos clásicos que hemos entregado en México.'],
       '/transport': ['Traslado de autos en México — Classics Mexico', 'Movemos cualquier auto entre ciudades de México con recolección, seguimiento y entrega coordinada.'],
       '/importacion': ['Importación de autos clásicos — Classics Mexico', 'Buscamos, revisamos e importamos autos clásicos desde Estados Unidos o Europa hasta México.'],
     };
@@ -506,7 +505,7 @@ function Seo() {
 
 function Router() {
   const [location] = useLocation();
-  return <ErrorBoundary resetKey={location}><Seo /><Shell><Switch><Route path="/" component={Home} /><Route path="/inventory" component={Inventory} /><Route path="/inventory/:slug" component={InventoryDetail} /><Route path="/sold/:id" component={SoldDetail} /><Route path="/sold" component={SoldArchive} /><Route path="/transport" component={Transport} /><Route path="/importacion" component={Importation} /><Route component={NotFound} /></Switch></Shell></ErrorBoundary>;
+  return <ErrorBoundary resetKey={location}><Seo /><Shell><Switch><Route path="/" component={Home} /><Route path="/inventory" component={Inventory} /><Route path="/inventory/:slug" component={InventoryDetail} /><Route path="/sold/:id" component={SoldDetail} /><Route path="/transport" component={Transport} /><Route path="/importacion" component={Importation} /><Route component={NotFound} /></Switch></Shell></ErrorBoundary>;
 }
 
 function App() {
