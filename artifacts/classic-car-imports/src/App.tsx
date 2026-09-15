@@ -364,12 +364,11 @@ function Home() {
             <h2 className="display-serif mt-5 text-5xl leading-[.95] sm:text-6xl">Clásicos <span className="italic">disponibles.</span></h2>
             <p className="mt-5 max-w-xl text-sm leading-7 text-muted-foreground">Unidades seleccionadas, revisadas y listas para comenzar su siguiente historia en México.</p>
           </div>
-          <div className="flex shrink-0 flex-col items-start gap-4 md:items-end">
-              <Link href="/inventory" data-testid="link-home-all-inventory" className="inline-flex items-center gap-3 border-b border-primary pb-2 text-xs font-bold uppercase tracking-[.12em] text-primary">Ver autos en venta <ArrowUpRight size={15} /></Link>
-              <Link href="/sold" data-testid="link-home-sold" className="text-xs text-muted-foreground hover:text-primary">Consultar archivo de vendidos</Link>
-          </div>
         </div>
         {featured.length === 0 ? <EmptyState label="Pronto agregaremos nuevos autos al inventario." /> : <div className="mt-10 grid gap-5 md:grid-cols-3">{featured.map((vehicle) => <HomeFeatureCard key={vehicle.id} vehicle={vehicle} />)}</div>}
+        <div className="mt-8 flex justify-center">
+          <Link href="/inventory" data-testid="link-home-all-inventory" className="inline-flex items-center gap-3 border-b border-primary pb-2 text-xs font-bold uppercase tracking-[.12em] text-primary hover:text-primary/75">Ver todos los autos disponibles <ArrowUpRight size={15} /></Link>
+        </div>
       </section>
 
       <section className="bg-primary text-primary-foreground">
@@ -405,6 +404,8 @@ function Inventory() {
   const [sort, setSort] = useState<'featured' | 'newest' | 'price-low' | 'price-high'>('featured');
   const params = useMemo(() => ({ ...(search ? { search } : {}), ...(bodyStyle ? { bodyStyle } : {}), sort }), [search, bodyStyle, sort]);
   const query = useListInventory(params, { query: { queryKey: getListInventoryQueryKey(params) } });
+  const sold = useListSoldVehicles(undefined, { query: { queryKey: getListSoldVehiclesQueryKey() } });
+  const recentSold = useMemo(() => (sold.data ?? []).slice(0, 3), [sold.data]);
   const bodyStyles = useMemo(() => Array.from(new Set((query.data ?? []).map((vehicle) => vehicle.bodyStyle))).sort(), [query.data]);
   return (
     <div className="page-enter">
@@ -420,6 +421,15 @@ function Inventory() {
           </div>
         </div>
         {query.isLoading ? <LoadingState label="Revisando los autos disponibles…" /> : query.isError ? <ErrorState onRetry={() => void query.refetch()} /> : (query.data?.length ?? 0) === 0 ? <EmptyState label="No encontramos autos con esa búsqueda. Prueba con algo más general." /> : <><div className="mt-8 flex items-center justify-between"><p className="label-mono text-muted-foreground" data-testid="text-inventory-count">{query.data?.length} autos en el inventario</p>{(search || bodyStyle) && <button type="button" onClick={() => { setSearch(''); setBodyStyle(''); }} data-testid="button-clear-filters" className="text-xs font-semibold text-primary hover:underline">Limpiar filtros</button>}</div><div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">{query.data?.map((vehicle) => <VehicleCard key={vehicle.id} vehicle={vehicle} />)}</div></>}
+      </section>
+      <section className="border-t border-border bg-secondary text-secondary-foreground">
+        <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
+          <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+            <div><p className="label-mono text-accent">Archivo de vendidos</p><h2 className="display-serif mt-4 text-4xl sm:text-5xl">Clásicos que ya encontraron dueño.</h2></div>
+            <Link href="/sold" data-testid="link-inventory-sold-archive" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[.12em] text-accent">Ver archivo completo <ArrowUpRight size={15} /></Link>
+          </div>
+          {sold.isLoading ? <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{[1, 2, 3].map((item) => <div key={item} className="h-72 animate-pulse bg-white/10" />)}</div> : sold.isError ? <p className="mt-8 text-sm text-secondary-foreground/60">El archivo está temporalmente fuera de servicio.</p> : recentSold.length === 0 ? <p className="mt-8 text-sm text-secondary-foreground/60">Pronto agregaremos autos a este archivo.</p> : <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{recentSold.map((vehicle) => <SoldCard key={vehicle.id} vehicle={vehicle} />)}</div>}
+        </div>
       </section>
     </div>
   );
