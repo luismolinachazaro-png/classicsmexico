@@ -24,13 +24,11 @@ import {
 import {
   getGetInventoryVehicleQueryKey,
   getGetSoldVehicleQueryKey,
-  getGetSiteSummaryQueryKey,
   getListServicesQueryKey,
   getListSoldVehiclesQueryKey,
   useCreateInquiry,
   useGetInventoryVehicle,
   useGetSoldVehicle,
-  useGetSiteSummary,
   useListServices,
   useListSoldVehicles,
 } from '@workspace/api-client-react';
@@ -234,17 +232,20 @@ function VehicleCard({ vehicle, compact = false }: { vehicle: Vehicle; compact?:
 }
 
 function SoldCard({ vehicle }: { vehicle: SoldVehicle }) {
-  const isPortraitCover = vehicle.imageUrl.includes('porsche-911-coupe-1975') || vehicle.imageUrl.includes('porsche-911-sc-targa-1978');
-  const isPorsche = vehicle.make === 'Porsche';
+  const usesPortraitTemplate = [
+    'porsche-911-coupe-1975',
+    'porsche-911-sc-targa-1978',
+    'bmw-m3-e46-2003',
+  ].some((assetName) => vehicle.imageUrl.includes(assetName));
   return (
     <Link href={`/sold/${vehicle.id}`} className="group block border border-border bg-card text-card-foreground transition hover:-translate-y-1 hover:shadow-xl" data-testid={`card-sold-${vehicle.id}`}>
-      <div className={`relative overflow-hidden bg-secondary ${isPortraitCover ? 'aspect-[3/4]' : 'aspect-[4/3]'}`}>
+      <div className={`relative overflow-hidden bg-secondary ${usesPortraitTemplate ? 'aspect-[3/4]' : 'aspect-[4/3]'}`}>
         <ImageFrame src={vehicle.imageUrl} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} className="h-full w-full transition-transform duration-700 group-hover:scale-105" />
         <span className="absolute left-3 top-3 bg-secondary px-2 py-1 label-mono text-secondary-foreground">Vendido</span>
       </div>
       <div className="p-4">
         <div className="flex items-start justify-between gap-4"><h3 className="display-serif text-xl">{vehicle.make} {vehicle.model} {vehicle.year}</h3><ArrowUpRight size={17} className="mt-1 shrink-0 text-primary transition group-hover:rotate-45" /></div>
-        {vehicle.description && !isPorsche && <p className="mt-3 text-sm leading-6 text-muted-foreground">{vehicle.description}</p>}
+        {vehicle.description && !usesPortraitTemplate && <p className="mt-3 text-sm leading-6 text-muted-foreground">{vehicle.description}</p>}
       </div>
     </Link>
   );
@@ -323,19 +324,12 @@ function HomeSoldCard({ vehicle, lead = false }: { vehicle: SoldVehicle; lead?: 
 }
 
 function Home() {
-  const summary = useGetSiteSummary({ query: { queryKey: getGetSiteSummaryQueryKey() } });
-  if (summary.isLoading) return <LoadingState />;
-  if (summary.isError) return <ErrorState onRetry={() => void summary.refetch()} />;
   return (
     <div className="page-enter overflow-hidden">
       <section className="bg-secondary text-secondary-foreground">
         <div className="mx-auto grid max-w-[1600px] lg:min-h-[690px] lg:grid-cols-[.9fr_1.1fr]">
-          <div className="flex flex-col justify-between px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
-            <div><p className="label-mono text-accent">Classics México</p><h1 className="display-serif mt-7 text-[clamp(3.8rem,7.5vw,8rem)] leading-[.86] tracking-[-.065em]">Tres formas<br />de vivir un<br /><span className="italic text-accent">gran auto.</span></h1></div>
-            <div className="mt-12 grid grid-cols-2 gap-6 border-t border-white/20 pt-5">
-              <div><span className="display-serif block text-3xl text-accent">{summary.data?.yearsExperience ?? '—'}</span><span className="label-mono mt-1 block text-white/45">años de experiencia</span></div>
-              <div><span className="display-serif block text-3xl text-accent">{summary.data?.statesCovered ?? '—'}</span><span className="label-mono mt-1 block text-white/45">estados cubiertos</span></div>
-            </div>
+          <div className="flex items-center px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
+            <h1 className="display-serif text-[clamp(3.8rem,7.5vw,8rem)] leading-[.86] tracking-[-.065em]">Tres formas<br />de vivir un<br /><span className="italic text-accent">gran auto.</span></h1>
           </div>
           <div className="relative min-h-[430px] overflow-hidden">
             <img src={`${import.meta.env.BASE_URL}images/porsche-hero.jpg`} alt="Auto clásico en movimiento" className="absolute inset-0 h-full w-full object-cover" />
@@ -363,7 +357,7 @@ function Home() {
       </section>
 
       <section className="mx-auto grid max-w-[1600px] gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[.8fr_1.2fr] lg:px-12 lg:py-28">
-        <div><p className="label-mono text-primary">Traslado</p><h2 className="display-serif mt-5 max-w-lg text-5xl leading-[1] sm:text-6xl">De una ciudad mexicana a otra.</h2><p className="mt-7 max-w-md text-sm leading-7 text-muted-foreground">Este servicio no depende de una compra o importación. Movemos cualquier vehículo dentro de México.</p><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" data-testid="link-home-transport" className="mt-8 inline-flex items-center gap-3 bg-primary px-5 py-4 text-xs font-bold uppercase tracking-[.12em] text-primary-foreground">Contáctanos <ArrowUpRight size={15} /></a></div>
+        <div><p className="label-mono text-primary">Traslado</p><h2 className="display-serif mt-5 max-w-lg text-5xl leading-[1] sm:text-6xl">De una ciudad a otra.</h2><p className="mt-7 max-w-md text-sm leading-7 text-muted-foreground">Este servicio no depende de una compra o importación. Movemos cualquier vehículo dentro de México.</p><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" data-testid="link-home-transport" className="mt-8 inline-flex items-center gap-3 bg-primary px-5 py-4 text-xs font-bold uppercase tracking-[.12em] text-primary-foreground">Contáctanos <ArrowUpRight size={15} /></a></div>
         <div className="relative min-h-[390px] overflow-hidden bg-secondary">
           <div className="absolute inset-0 opacity-35 [background-image:linear-gradient(45deg,transparent_48%,hsl(var(--accent))_49%,hsl(var(--accent))_51%,transparent_52%)] [background-size:48px_48px]" />
           <div className="relative grid h-full content-between p-7 text-secondary-foreground sm:p-10">
