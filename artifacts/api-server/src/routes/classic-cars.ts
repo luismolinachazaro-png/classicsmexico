@@ -5,6 +5,8 @@ import {
   CreateInquiryBody,
   GetInventoryVehicleParams,
   GetInventoryVehicleResponse,
+  GetSoldVehicleParams,
+  GetSoldVehicleResponse,
   GetSiteSummaryResponse,
   ListInventoryQueryParams,
   ListInventoryResponse,
@@ -126,6 +128,26 @@ router.get("/sold", async (req, res): Promise<void> => {
     .orderBy(desc(soldVehiclesTable.soldDate), desc(soldVehiclesTable.id));
 
   res.json(ListSoldVehiclesResponse.parse(vehicles));
+});
+
+router.get("/sold/:id", async (req, res): Promise<void> => {
+  const parsed = GetSoldVehicleParams.safeParse(req.params);
+  if (!parsed.success) {
+    res.status(400).json({ error: parsed.error.message });
+    return;
+  }
+
+  const [vehicle] = await db
+    .select()
+    .from(soldVehiclesTable)
+    .where(eq(soldVehiclesTable.id, parsed.data.id));
+
+  if (!vehicle) {
+    res.status(404).json({ error: "Auto vendido no encontrado" });
+    return;
+  }
+
+  res.json(GetSoldVehicleResponse.parse(vehicle));
 });
 
 router.get("/services", async (_req, res): Promise<void> => {

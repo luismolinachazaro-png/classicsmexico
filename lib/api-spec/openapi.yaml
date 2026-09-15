@@ -103,6 +103,26 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/SoldVehicle"
+  /sold/{id}:
+    get:
+      operationId: getSoldVehicle
+      tags: [inventory]
+      summary: Get a sold vehicle by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Sold vehicle details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SoldVehicle"
+        "404":
+          description: Sold vehicle not found
   /services:
     get:
       operationId: listServices
@@ -189,6 +209,9 @@ components:
         location: { type: string }
         mileageKm: { type: ["number", "null"] }
         description: { type: ["string", "null"] }
+        galleryUrls:
+          type: ["array", "null"]
+          items: { type: string }
     ImportService:
       type: object
       required: [id, name, description, details]

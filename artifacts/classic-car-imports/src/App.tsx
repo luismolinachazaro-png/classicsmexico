@@ -24,12 +24,14 @@ import {
 } from 'lucide-react';
 import {
   getGetInventoryVehicleQueryKey,
+  getGetSoldVehicleQueryKey,
   getGetSiteSummaryQueryKey,
   getListInventoryQueryKey,
   getListServicesQueryKey,
   getListSoldVehiclesQueryKey,
   useCreateInquiry,
   useGetInventoryVehicle,
+  useGetSoldVehicle,
   useGetSiteSummary,
   useListInventory,
   useListServices,
@@ -219,19 +221,19 @@ function VehicleCard({ vehicle, compact = false }: { vehicle: Vehicle; compact?:
 
 function SoldCard({ vehicle }: { vehicle: SoldVehicle }) {
   return (
-    <article className="group border border-border bg-card" data-testid={`card-sold-${vehicle.id}`}>
+    <Link href={`/sold/${vehicle.id}`} className="group block border border-border bg-card transition hover:-translate-y-1 hover:shadow-xl" data-testid={`card-sold-${vehicle.id}`}>
       <div className="relative aspect-[4/3] overflow-hidden bg-secondary">
         <ImageFrame src={vehicle.imageUrl} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} className="h-full w-full transition-transform duration-700 group-hover:scale-105" />
         <span className="absolute left-3 top-3 bg-secondary px-2 py-1 label-mono text-secondary-foreground">Vendido</span>
       </div>
       <div className="p-4">
-        <p className="label-mono text-muted-foreground">{vehicle.year} · {vehicle.location}</p>
-        <h3 className="display-serif mt-2 text-xl">{vehicle.make} {vehicle.model}</h3>
+        <p className="label-mono text-muted-foreground">{vehicle.year}</p>
+        <div className="flex items-start justify-between gap-4"><h3 className="display-serif mt-2 text-xl">{vehicle.make} {vehicle.model}</h3><ArrowUpRight size={17} className="mt-3 shrink-0 text-primary transition group-hover:rotate-45" /></div>
         {vehicle.description && <p className="mt-3 text-sm leading-6 text-muted-foreground">{vehicle.description}</p>}
         {vehicle.mileageKm != null && <p className="mt-4 border-t border-border pt-3 font-mono text-xs text-primary">{miles.format(vehicle.mileageKm)} KM</p>}
         <p className="mt-4 text-xs text-muted-foreground">Vendido en {new Date(vehicle.soldDate).toLocaleDateString('es-MX', { month: 'short', year: 'numeric' })}</p>
       </div>
-    </article>
+    </Link>
   );
 }
 
@@ -322,7 +324,7 @@ function HomeSoldCard({ vehicle, lead = false }: { vehicle: SoldVehicle; lead?: 
         <span className="absolute left-4 top-4 bg-accent px-3 py-2 label-mono text-accent-foreground">Entregado</span>
       </div>
       <div className={`flex flex-col justify-between bg-secondary p-6 text-secondary-foreground ${lead ? 'sm:p-8' : ''}`}>
-        <p className="label-mono text-accent">{vehicle.year} · {vehicle.location}</p>
+        <p className="label-mono text-accent">{vehicle.year}</p>
         <div className={lead ? 'mt-20' : 'mt-12'}>
           <h3 className={`display-serif ${lead ? 'text-4xl' : 'text-3xl'}`}>{vehicle.make}<br /><span className="italic">{vehicle.model}</span></h3>
           {vehicle.mileageKm != null && <p className="mt-4 font-mono text-xs text-white/65">{miles.format(vehicle.mileageKm)} KM</p>}
@@ -460,11 +462,65 @@ function DetailStat({ icon: Icon, label, value }: { icon: typeof Gauge; label: s
   return <div className="flex gap-3 py-3"><Icon size={16} className="mt-0.5 shrink-0 text-primary" /><div><p className="label-mono text-muted-foreground">{label}</p><p className="mt-1 text-sm">{value}</p></div></div>;
 }
 
+function SoldDetail() {
+  const { id } = useParams<{ id: string }>();
+  const vehicleId = Number(id);
+  const query = useGetSoldVehicle(vehicleId, {
+    query: {
+      queryKey: getGetSoldVehicleQueryKey(vehicleId),
+      enabled: Number.isInteger(vehicleId) && vehicleId > 0,
+    },
+  });
+
+  if (!Number.isInteger(vehicleId) || vehicleId <= 0) return <NotFound />;
+  if (query.isLoading) return <LoadingState label="Abriendo la historia de este clásico…" />;
+  if (query.isError || !query.data) return <ErrorState onRetry={() => void query.refetch()} label="No pudimos encontrar este auto vendido." />;
+
+  const vehicle = query.data;
+  const gallery = Array.from(new Set(vehicle.galleryUrls ?? []));
+
+  return (
+    <div className="page-enter">
+      <section className="bg-secondary text-secondary-foreground">
+        <div className="mx-auto max-w-[1440px] px-5 pb-12 pt-8 sm:px-8 lg:px-12 lg:pb-20">
+          <Link href="/sold" className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.12em] text-secondary-foreground/65 hover:text-accent"><ChevronLeft size={15} />Volver a autos vendidos</Link>
+          <div className="mt-8 grid gap-10 lg:grid-cols-[.82fr_1.18fr] lg:items-center">
+            <div>
+              <p className="label-mono text-accent">Vendido · {vehicle.year}</p>
+              <h1 className="display-serif mt-5 text-5xl leading-[.95] sm:text-7xl">{vehicle.make}<br /><span className="italic text-accent">{vehicle.model}</span></h1>
+              {vehicle.mileageKm != null && <p className="mt-8 border-t border-white/15 pt-5 font-mono text-sm text-secondary-foreground/75">{miles.format(vehicle.mileageKm)} KM</p>}
+              <p className="mt-8 text-base leading-8 text-secondary-foreground/75">{vehicle.description ?? `Un ${vehicle.make} ${vehicle.model} de ${vehicle.year} que ya forma parte de una nueva colección.`}</p>
+              <div className="mt-8"><InquiryDialog triggerLabel="Buscar uno similar" inquiryType="general" /></div>
+            </div>
+            <div className="overflow-hidden border border-white/15 bg-primary">
+              <ImageFrame src={vehicle.imageUrl} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} className="aspect-[4/3] h-full w-full" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {gallery.length > 0 && (
+        <section className="editorial-grid mx-auto max-w-[1440px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
+          <p className="label-mono text-primary">Galería</p>
+          <h2 className="display-serif mt-4 text-4xl sm:text-5xl">Todos los ángulos.</h2>
+          <div className="mt-10 grid gap-5 md:grid-cols-2">
+            {gallery.map((image, index) => (
+              <div key={image} className={`${index === 0 || index % 5 === 0 ? 'md:col-span-2' : ''} overflow-hidden border border-border bg-card`}>
+                <ImageFrame src={image} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}, vista ${index + 1}`} className={`${index === 0 || index % 5 === 0 ? 'aspect-[16/9]' : 'aspect-[4/3]'} h-full w-full`} />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  );
+}
+
 function SoldArchive() {
   const query = useListSoldVehicles(undefined, { query: { queryKey: getListSoldVehiclesQueryKey() } });
   const [search, setSearch] = useState('');
-  const filtered = useMemo(() => (query.data ?? []).filter((vehicle) => `${vehicle.year} ${vehicle.make} ${vehicle.model} ${vehicle.location}`.toLowerCase().includes(search.toLowerCase())), [query.data, search]);
-  return <div className="page-enter"><section className="border-b border-border bg-secondary text-secondary-foreground"><div className="mx-auto max-w-[1440px] px-5 pb-14 pt-20 sm:px-8 lg:px-12 lg:pb-20 lg:pt-28"><p className="label-mono text-accent">Autos vendidos</p><h1 className="display-serif mt-5 max-w-3xl text-5xl leading-[1.05] sm:text-7xl">Clásicos que ya tienen<br /><span className="italic text-accent">un nuevo dueño.</span></h1><p className="mt-7 max-w-lg text-base leading-7 text-secondary-foreground/70">Una selección de autos que hemos ayudado a comprar, importar y entregar en México.</p></div></section><section className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-12 lg:py-16">{query.isLoading ? <LoadingState /> : query.isError ? <ErrorState onRetry={() => void query.refetch()} /> : <><div className="flex flex-col justify-between gap-4 border-b border-border pb-5 sm:flex-row sm:items-center"><p className="label-mono text-muted-foreground" data-testid="text-sold-count">{filtered.length} autos vendidos</p><div className="relative w-full sm:w-72"><Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" /><input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar por marca, modelo o ciudad" aria-label="Buscar autos vendidos" data-testid="input-sold-search" className="w-full border border-border bg-card py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary" /></div></div>{filtered.length === 0 ? <EmptyState label="No encontramos autos con esa búsqueda." /> : <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{filtered.map((vehicle) => <SoldCard key={vehicle.id} vehicle={vehicle} />)}</div>}</>}</section></div>;
+  const filtered = useMemo(() => (query.data ?? []).filter((vehicle) => `${vehicle.year} ${vehicle.make} ${vehicle.model}`.toLowerCase().includes(search.toLowerCase())), [query.data, search]);
+  return <div className="page-enter"><section className="border-b border-border bg-secondary text-secondary-foreground"><div className="mx-auto max-w-[1440px] px-5 pb-14 pt-20 sm:px-8 lg:px-12 lg:pb-20 lg:pt-28"><p className="label-mono text-accent">Autos vendidos</p><h1 className="display-serif mt-5 max-w-3xl text-5xl leading-[1.05] sm:text-7xl">Clásicos que ya tienen<br /><span className="italic text-accent">un nuevo dueño.</span></h1><p className="mt-7 max-w-lg text-base leading-7 text-secondary-foreground/70">Una selección de autos que hemos ayudado a comprar, importar y entregar en México.</p></div></section><section className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-12 lg:py-16">{query.isLoading ? <LoadingState /> : query.isError ? <ErrorState onRetry={() => void query.refetch()} /> : <><div className="flex flex-col justify-between gap-4 border-b border-border pb-5 sm:flex-row sm:items-center"><p className="label-mono text-muted-foreground" data-testid="text-sold-count">{filtered.length} autos vendidos</p><div className="relative w-full sm:w-72"><Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" /><input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar por marca o modelo" aria-label="Buscar autos vendidos" data-testid="input-sold-search" className="w-full border border-border bg-card py-2.5 pl-9 pr-3 text-sm outline-none focus:border-primary" /></div></div>{filtered.length === 0 ? <EmptyState label="No encontramos autos con esa búsqueda." /> : <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{filtered.map((vehicle) => <SoldCard key={vehicle.id} vehicle={vehicle} />)}</div>}</>}</section></div>;
 }
 
 function Transport() {
@@ -505,7 +561,7 @@ function Seo() {
 
 function Router() {
   const [location] = useLocation();
-  return <ErrorBoundary resetKey={location}><Seo /><Shell><Switch><Route path="/" component={Home} /><Route path="/inventory" component={Inventory} /><Route path="/inventory/:slug" component={InventoryDetail} /><Route path="/sold" component={SoldArchive} /><Route path="/transport" component={Transport} /><Route path="/importacion" component={Importation} /><Route component={NotFound} /></Switch></Shell></ErrorBoundary>;
+  return <ErrorBoundary resetKey={location}><Seo /><Shell><Switch><Route path="/" component={Home} /><Route path="/inventory" component={Inventory} /><Route path="/inventory/:slug" component={InventoryDetail} /><Route path="/sold/:id" component={SoldDetail} /><Route path="/sold" component={SoldArchive} /><Route path="/transport" component={Transport} /><Route path="/importacion" component={Importation} /><Route component={NotFound} /></Switch></Shell></ErrorBoundary>;
 }
 
 function App() {

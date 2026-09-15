@@ -381,6 +381,83 @@ export function useListSoldVehicles<TData = Awaited<ReturnType<typeof listSoldVe
 
 
 
+export const getGetSoldVehicleUrl = (id: number,) => {
+
+
+
+
+  return `/api/sold/${id}`
+}
+
+/**
+ * @summary Get a sold vehicle by id
+ */
+export const getSoldVehicle = async (id: number, options?: Parameters<typeof customFetch>[1]): Promise<SoldVehicle> => {
+
+  return customFetch<SoldVehicle>(getGetSoldVehicleUrl(id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetSoldVehicleQueryKey = (id: number,) => {
+    return [
+    `/api/sold/${id}`
+    ] as const;
+    }
+
+
+export const getGetSoldVehicleQueryOptions = <TData = Awaited<ReturnType<typeof getSoldVehicle>>, TError = ErrorType<void>>(id: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSoldVehicle>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetSoldVehicleQueryKey(id);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getSoldVehicle>>> = ({ signal }) => getSoldVehicle(id, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getSoldVehicle>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetSoldVehicleQueryResult = NonNullable<Awaited<ReturnType<typeof getSoldVehicle>>>
+export type GetSoldVehicleQueryError = ErrorType<void>
+
+
+/**
+ * @summary Get a sold vehicle by id
+ */
+
+export function useGetSoldVehicle<TData = Awaited<ReturnType<typeof getSoldVehicle>>, TError = ErrorType<void>>(
+ id: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSoldVehicle>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetSoldVehicleQueryOptions(id,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
 export const getListServicesUrl = () => {
 
 

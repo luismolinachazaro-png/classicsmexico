@@ -86,9 +86,31 @@ export const ListSoldVehiclesResponseItem = zod.object({
   "imageUrl": zod.string(),
   "location": zod.string(),
   "mileageKm": zod.number().nullish(),
-  "description": zod.string().nullish()
+  "description": zod.string().nullish(),
+  "galleryUrls": zod.array(zod.string()).nullish()
 })
 export const ListSoldVehiclesResponse = zod.array(ListSoldVehiclesResponseItem)
+
+
+/**
+ * @summary Get a sold vehicle by id
+ */
+export const GetSoldVehicleParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+export const GetSoldVehicleResponse = zod.object({
+  "id": zod.number(),
+  "year": zod.number(),
+  "make": zod.string(),
+  "model": zod.string(),
+  "soldDate": zod.string(),
+  "imageUrl": zod.string(),
+  "location": zod.string(),
+  "mileageKm": zod.number().nullish(),
+  "description": zod.string().nullish(),
+  "galleryUrls": zod.array(zod.string()).nullish()
+})
 
 
 /**

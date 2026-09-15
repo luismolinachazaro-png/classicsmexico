@@ -18,4 +18,6 @@ export interface SoldVehicle {
   mileageKm?: number | null;
   /** @nullable */
   description?: string | null;
+  /** @nullable */
+  galleryUrls?: string[] | null;
 }

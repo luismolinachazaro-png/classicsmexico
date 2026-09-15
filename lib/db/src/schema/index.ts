@@ -34,6 +34,7 @@ export const soldVehiclesTable = pgTable("sold_vehicles", {
   location: text("location").notNull(),
   mileageKm: integer("mileage_km"),
   description: text("description"),
+  galleryUrls: text("gallery_urls").array(),
 });
 
 export const inquiriesTable = pgTable("inquiries", {
