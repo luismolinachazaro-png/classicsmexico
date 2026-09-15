@@ -353,25 +353,9 @@ function Home() {
           <div className="relative min-h-[430px] overflow-hidden">
             <img src={`${import.meta.env.BASE_URL}images/porsche-hero.jpg`} alt="Auto clásico en movimiento" className="absolute inset-0 h-full w-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-secondary/55 via-transparent to-transparent" />
-            <p className="absolute bottom-5 left-5 label-mono text-white/65">Venta · Importación · Traslado</p>
           </div>
         </div>
       </section>
-
-      <nav aria-label="Verticales de negocio" className="mx-auto grid max-w-[1600px] border-x border-border md:grid-cols-3">
-        {[
-          { title: 'Venta', text: 'Compra uno de nuestros clásicos disponibles y legalizados para México.', href: '/inventory', icon: ShieldCheck },
-          { title: 'Importación', text: 'Encontramos y traemos el auto que buscas desde Estados Unidos o Europa.', href: '/importacion', icon: Globe2 },
-          { title: 'Traslado', text: 'Movemos cualquier vehículo entre ciudades dentro de México.', href: '/transport', icon: Truck },
-        ].map(({ title, text, href, icon: Icon }) => (
-          <Link key={title} href={href} className="group border-b border-border p-7 md:border-b-0 md:border-r md:last:border-r-0 lg:p-10">
-            <Icon size={21} className="text-primary" />
-            <h2 className="display-serif mt-10 text-4xl">{title}</h2>
-            <p className="mt-4 min-h-14 max-w-sm text-sm leading-7 text-muted-foreground">{text}</p>
-            <span className="mt-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[.12em] text-primary">Conocer {title.toLowerCase()} <ArrowRight size={15} className="transition group-hover:translate-x-1" /></span>
-          </Link>
-        ))}
-      </nav>
 
       <section className="editorial-grid mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
         <div className="flex flex-col justify-between gap-7 md:flex-row md:items-end">
