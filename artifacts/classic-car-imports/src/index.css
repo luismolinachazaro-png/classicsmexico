@@ -292,11 +292,42 @@ body { min-width: 320px; }
 
 .vehicle-card img { transition: transform .7s cubic-bezier(.22,.61,.36,1); }
 .vehicle-card:hover img { transform: scale(1.045); }
+.editorial-grid {
+  background-image:
+    linear-gradient(to right, hsl(var(--border) / .28) 1px, transparent 1px);
+  background-size: calc((100% - 2.5rem) / 6) 100%;
+}
+.marquee-track {
+  animation: marquee 26s linear infinite;
+}
+.service-route::after {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border: 1px solid currentColor;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease, inset .3s ease;
+}
+.service-route:hover::after {
+  inset: 7px;
+  opacity: .15;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
 .ink-link { position: relative; }
 .ink-link::after { content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .3s ease; }
 .ink-link:hover::after, .ink-link:focus-visible::after { transform: scaleX(1); transform-origin: left; }
 button, a, input, select, textarea { transition: border-color .2s ease, background-color .2s ease, color .2s ease, transform .2s ease, opacity .2s ease; }
 :focus-visible { outline: 2px solid hsl(var(--accent)); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .page-enter, .rise-in, .marquee-track { animation: none; }
+  .vehicle-card img { transition: none; }
+}
 
 /**
  * Using the elevate system.

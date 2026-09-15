@@ -61,33 +61,36 @@ function Shell({ children }: { children: ReactNode }) {
   ];
   return (
     <div className="site-grain min-h-[100dvh] bg-background text-foreground">
-      <header className="relative z-40 border-b border-border bg-background/95 backdrop-blur-sm">
-        <div className="mx-auto flex h-[76px] max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:px-12">
+      <header className="sticky top-0 z-40 border-b border-foreground/15 bg-background/92 backdrop-blur-md">
+        <div className="mx-auto grid h-[82px] max-w-[1600px] grid-cols-[1fr_auto] items-center px-5 sm:px-8 md:grid-cols-[auto_1fr_auto] lg:px-12">
           <Link href="/" data-testid="link-home" className="group flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center border border-primary bg-primary text-background">
-              <span className="display-serif text-2xl italic">C</span>
-            </span>
+            <span className="display-serif text-[2rem] italic leading-none text-primary">CM</span>
+            <span className="h-8 w-px bg-border" />
             <span className="leading-none">
-              <span className="block font-semibold tracking-[.12em] text-foreground">CLASSICS MEXICO</span>
-              <span className="label-mono mt-1 block text-muted-foreground">México · Estados Unidos · Europa</span>
+              <span className="block text-[11px] font-bold tracking-[.2em] text-foreground">CLASSICS</span>
+              <span className="mt-1 block text-[11px] font-bold tracking-[.2em] text-foreground">MEXICO</span>
             </span>
           </Link>
-          <nav className="hidden items-center gap-8 md:flex" aria-label="Navegación principal">
+          <nav className="mx-auto hidden items-center gap-1 md:flex" aria-label="Navegación principal">
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 data-testid={`link-nav-${link.label.toLowerCase().replaceAll(' ', '-')}`}
-                className={`ink-link text-sm ${location === link.href ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}
+                className={`px-4 py-2 text-xs font-semibold uppercase tracking-[.12em] ${location === link.href ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
               >
                 {link.label}
               </Link>
             ))}
           </nav>
+          <div className="hidden items-center gap-3 md:flex">
+            <span className="h-2 w-2 rounded-full bg-accent" />
+            <span className="label-mono text-muted-foreground">México / USA / Europa</span>
+          </div>
           <button
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
-            className="border border-border p-2 text-foreground md:hidden"
+            className="border border-foreground/25 p-2 text-foreground md:hidden"
             aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
             data-testid="button-toggle-menu"
           >
@@ -95,15 +98,15 @@ function Shell({ children }: { children: ReactNode }) {
           </button>
         </div>
         {menuOpen && (
-          <div className="border-t border-border bg-card px-5 py-5 md:hidden">
-            <nav className="flex flex-col gap-4" aria-label="Navegación móvil">
+          <div className="border-t border-border bg-background px-5 py-5 md:hidden">
+            <nav className="flex flex-col" aria-label="Navegación móvil">
               {links.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
                   data-testid={`link-mobile-${link.label.toLowerCase().replaceAll(' ', '-')}`}
-                  className="text-lg text-foreground"
+                  className="border-b border-border py-4 display-serif text-2xl text-foreground"
                 >
                   {link.label}
                 </Link>
@@ -113,16 +116,11 @@ function Shell({ children }: { children: ReactNode }) {
         )}
       </header>
       <main>{children}</main>
-      <footer className="bg-secondary text-secondary-foreground">
-        <div className="mx-auto grid max-w-[1440px] gap-12 px-5 py-14 sm:px-8 lg:grid-cols-[1.2fr_.8fr_.8fr] lg:px-12">
+      <footer className="overflow-hidden bg-secondary text-secondary-foreground">
+        <div className="mx-auto grid max-w-[1600px] gap-12 px-5 pb-10 pt-16 sm:px-8 lg:grid-cols-[1.35fr_.65fr_.65fr] lg:px-12 lg:pt-24">
           <div>
-            <div className="flex items-center gap-3">
-              <span className="flex h-9 w-9 items-center justify-center border border-primary bg-primary text-background display-serif text-xl italic">C</span>
-              <span className="font-semibold tracking-[.12em]">CLASSICS MEXICO</span>
-            </div>
-            <p className="mt-5 max-w-sm text-sm leading-7 text-secondary-foreground/65">
-              Autos clásicos bien elegidos, procesos claros y atención personal en cada kilómetro.
-            </p>
+            <p className="label-mono text-accent">Autos que merecen otra vida</p>
+            <p className="display-serif mt-5 max-w-xl text-4xl leading-tight sm:text-5xl">El siguiente clásico de México puede estar en cualquier parte del mundo.</p>
           </div>
           <div>
             <p className="label-mono text-accent">Conoce más</p>
@@ -139,8 +137,11 @@ function Shell({ children }: { children: ReactNode }) {
             <p className="mt-4 font-mono text-xs text-secondary-foreground/50">LUN—VIE / 09:00—18:00 CST</p>
           </div>
         </div>
+        <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-12">
+          <p aria-hidden="true" className="pointer-events-none select-none whitespace-nowrap text-center text-[clamp(4rem,13vw,12rem)] font-bold leading-[.8] tracking-[-.075em] text-secondary-foreground/[.055]">CLASSICS MEXICO</p>
+        </div>
         <div className="border-t border-secondary-foreground/15 px-5 py-5 sm:px-8 lg:px-12">
-          <div className="mx-auto flex max-w-[1440px] flex-col justify-between gap-2 text-[11px] text-secondary-foreground/45 sm:flex-row">
+          <div className="mx-auto flex max-w-[1600px] flex-col justify-between gap-2 text-[11px] text-secondary-foreground/45 sm:flex-row">
             <span>© 2026 Classics Mexico. Autos clásicos.</span>
             <span>Información clara en cada paso.</span>
           </div>
@@ -286,6 +287,50 @@ function InquiryDialog({ triggerLabel, vehicleSlug, inquiryType = 'general', ful
   );
 }
 
+function HomeFeatureCard({ vehicle, secondary = false }: { vehicle: Vehicle; secondary?: boolean }) {
+  return (
+    <Link
+      href={`/inventory/${vehicle.slug}`}
+      data-testid={`card-home-vehicle-${vehicle.id}`}
+      className={`group relative block overflow-hidden bg-secondary ${secondary ? 'min-h-[340px]' : 'min-h-[520px] lg:min-h-[680px]'}`}
+    >
+      <ImageFrame src={vehicle.imageUrl} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} className="absolute inset-0 h-full w-full transition duration-700 group-hover:scale-[1.035]" />
+      <div className="absolute inset-0 bg-gradient-to-t from-secondary via-secondary/10 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-8">
+        <div className="flex items-end justify-between gap-5">
+          <div>
+            <p className="label-mono text-accent">{vehicle.year} · {vehicle.bodyStyle}</p>
+            <h3 className={`display-serif mt-2 leading-none ${secondary ? 'text-3xl' : 'text-4xl sm:text-5xl'}`}>{vehicle.make}<br /><span className="italic">{vehicle.model}</span></h3>
+          </div>
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/50 transition group-hover:rotate-45 group-hover:bg-accent group-hover:text-accent-foreground"><ArrowUpRight size={19} /></span>
+        </div>
+        <div className="mt-5 flex items-center justify-between border-t border-white/25 pt-4 text-xs">
+          <span className="font-mono text-white/65">{vehicle.location} · {miles.format(vehicle.mileage)} MI</span>
+          <span className="font-semibold text-accent">{money.format(vehicle.price)} USD</span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function HomeSoldCard({ vehicle, lead = false }: { vehicle: SoldVehicle; lead?: boolean }) {
+  return (
+    <article className={`group grid overflow-hidden border border-white/15 ${lead ? 'md:grid-cols-[1.25fr_.75fr]' : ''}`} data-testid={`card-home-sold-${vehicle.id}`}>
+      <div className={`relative overflow-hidden bg-primary ${lead ? 'min-h-[390px]' : 'aspect-[4/3]'}`}>
+        <ImageFrame src={vehicle.imageUrl} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} className="h-full w-full grayscale transition duration-700 group-hover:scale-105 group-hover:grayscale-0" />
+        <span className="absolute left-4 top-4 bg-accent px-3 py-2 label-mono text-accent-foreground">Entregado</span>
+      </div>
+      <div className={`flex flex-col justify-between bg-secondary p-6 text-secondary-foreground ${lead ? 'sm:p-8' : ''}`}>
+        <p className="label-mono text-accent">{vehicle.year} · {vehicle.location}</p>
+        <div className={lead ? 'mt-20' : 'mt-12'}>
+          <h3 className={`display-serif ${lead ? 'text-4xl' : 'text-3xl'}`}>{vehicle.make}<br /><span className="italic">{vehicle.model}</span></h3>
+          <p className="mt-5 border-t border-white/15 pt-4 text-xs text-white/50">Vendido en {new Date(vehicle.soldDate).toLocaleDateString('es-MX', { month: 'long', year: 'numeric' })}</p>
+        </div>
+      </div>
+    </article>
+  );
+}
+
 function Home() {
   const inventory = useListInventory({ sort: 'featured' }, { query: { queryKey: getListInventoryQueryKey({ sort: 'featured' }) } });
   const sold = useListSoldVehicles(undefined, { query: { queryKey: getListSoldVehiclesQueryKey() } });
@@ -295,58 +340,98 @@ function Home() {
   if (inventory.isLoading || sold.isLoading || summary.isLoading) return <LoadingState />;
   if (inventory.isError || sold.isError || summary.isError) return <ErrorState onRetry={() => { void inventory.refetch(); void sold.refetch(); void summary.refetch(); }} />;
   return (
-    <div className="page-enter">
-      <section className="relative min-h-[680px] overflow-hidden bg-secondary text-white">
-        <img src={`${import.meta.env.BASE_URL}images/porsche-hero.jpg`} alt="Porsche clásico recorriendo una carretera" className="absolute inset-0 h-full w-full object-cover object-center" />
-        <div className="absolute inset-0 bg-gradient-to-r from-secondary via-secondary/80 to-secondary/10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-secondary/70 via-transparent to-transparent" />
-        <div className="relative mx-auto flex min-h-[680px] max-w-[1440px] flex-col justify-end px-5 pb-14 pt-28 sm:px-8 lg:px-12 lg:pb-20">
-          <div className="max-w-3xl">
-            <p className="label-mono rise-in text-accent">Classics Mexico · Autos con historia</p>
-            <h1 className="display-serif rise-in delay-1 mt-6 text-[clamp(3.7rem,8vw,7.8rem)] leading-[.9] tracking-[-.05em]">El clásico que<br /><span className="italic text-accent">sí quieres manejar.</span></h1>
-            <p className="rise-in delay-2 mt-8 max-w-xl text-base leading-7 text-white/75 sm:text-lg">Encontramos, importamos y entregamos autos especiales. Sin promesas vagas: sabes qué estás comprando y qué hace falta para tenerlo en México.</p>
-            <div className="rise-in delay-3 mt-9 flex flex-wrap items-center gap-4">
-              <Link href="/inventory" data-testid="link-hero-inventory" className="inline-flex items-center gap-2 bg-accent px-5 py-3.5 text-sm font-semibold text-accent-foreground hover:-translate-y-0.5">Ver autos disponibles <ArrowRight size={16} /></Link>
-              <Link href="/importacion" data-testid="link-hero-import" className="inline-flex items-center gap-2 border border-white/50 px-5 py-3.5 text-sm font-semibold text-white hover:bg-white hover:text-secondary">Quiero importar un auto <ArrowUpRight size={16} /></Link>
+    <div className="page-enter overflow-hidden">
+      <section className="relative bg-secondary text-white">
+        <div className="mx-auto grid min-h-[760px] max-w-[1600px] lg:grid-cols-12">
+          <div className="relative z-10 flex flex-col justify-between px-5 pb-12 pt-16 sm:px-8 lg:col-span-7 lg:px-12 lg:pb-16 lg:pt-20">
+            <div className="flex items-center gap-4">
+              <span className="label-mono text-accent">Curaduría automotriz / México</span>
+              <span className="hidden h-px flex-1 bg-white/20 sm:block" />
+              <span className="hidden font-mono text-[10px] text-white/40 sm:block">EST. MMXVI</span>
+            </div>
+            <div className="relative mt-16 lg:mt-8">
+              <p aria-hidden="true" className="absolute -left-3 -top-24 select-none font-mono text-[11px] uppercase tracking-[.22em] text-white/35 [writing-mode:vertical-rl]">Importados · Legalizados · Entregados</p>
+              <h1 className="display-serif rise-in ml-7 text-[clamp(4.3rem,9.5vw,10rem)] leading-[.78] tracking-[-.075em]">Autos<br /><span className="relative z-20 italic text-accent">fuera</span><br />de serie.</h1>
+              <p className="rise-in delay-1 ml-7 mt-9 max-w-md text-base leading-7 text-white/68">Encontramos, importamos y entregamos autos especiales. Cada unidad llega con una historia clara y un camino definido hacia México.</p>
+              <div className="rise-in delay-2 ml-7 mt-8 flex flex-wrap gap-3">
+                <Link href="/inventory" data-testid="link-hero-inventory" className="inline-flex items-center gap-3 bg-accent px-5 py-4 text-xs font-bold uppercase tracking-[.12em] text-accent-foreground hover:-translate-y-1">Explorar inventario <ArrowRight size={16} /></Link>
+                <Link href="/importacion" data-testid="link-hero-import" className="inline-flex items-center gap-3 border border-white/35 px-5 py-4 text-xs font-bold uppercase tracking-[.12em] text-white hover:bg-white hover:text-secondary">Importar un auto <ArrowUpRight size={16} /></Link>
+              </div>
+            </div>
+            <div className="ml-7 mt-14 flex gap-10 border-t border-white/20 pt-5">
+              <div><span className="display-serif block text-3xl text-accent">{summary.data?.yearsExperience ?? '—'}</span><span className="label-mono mt-1 block text-white/45">años de experiencia</span></div>
+              <div><span className="display-serif block text-3xl text-accent">{summary.data?.statesCovered ?? '—'}</span><span className="label-mono mt-1 block text-white/45">estados cubiertos</span></div>
             </div>
           </div>
-          <div className="mt-12 flex max-w-xl gap-10 border-t border-white/25 pt-5">
-            <div><span className="block font-mono text-2xl text-accent">{summary.data?.yearsExperience ?? '—'}</span><span className="mt-1 block text-xs text-white/60">años haciendo esto</span></div>
-            <div><span className="block font-mono text-2xl text-accent">{summary.data?.statesCovered ?? '—'}</span><span className="mt-1 block text-xs text-white/60">estados con cobertura</span></div>
+          <div className="relative min-h-[520px] lg:col-span-5 lg:min-h-full">
+            <img src={`${import.meta.env.BASE_URL}images/porsche-hero.jpg`} alt="Porsche clásico recorriendo una carretera" className="absolute inset-0 h-full w-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-secondary/75 via-transparent to-secondary/15 lg:bg-gradient-to-r lg:from-secondary/55 lg:via-transparent lg:to-transparent" />
+            <div className="absolute bottom-0 left-0 border-l border-t border-white/25 bg-secondary/80 px-5 py-4 backdrop-blur-sm">
+              <p className="label-mono text-accent">Imagen de ruta</p>
+              <p className="mt-1 text-xs text-white/55">Un clásico debe seguir moviéndose.</p>
+            </div>
+          </div>
+        </div>
+        <div className="border-y border-white/15 bg-accent py-3 text-accent-foreground">
+          <div className="marquee-track flex min-w-max items-center gap-8 font-mono text-[10px] font-medium uppercase tracking-[.2em]">
+            {[1, 2].map((group) => <div key={group} className="flex items-center gap-8"><span>Inspección documentada</span><span>◆</span><span>Importación Estados Unidos y Europa</span><span>◆</span><span>Legalización en México</span><span>◆</span><span>Entrega nacional</span><span>◆</span></div>)}
           </div>
         </div>
       </section>
-      <section className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
-        <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-          <div><p className="label-mono text-primary">En nuestro inventario</p><h2 className="display-serif mt-3 text-4xl tracking-tight sm:text-5xl">Autos seleccionados</h2></div>
-          <Link href="/inventory" data-testid="link-home-all-inventory" className="ink-link inline-flex items-center gap-2 self-start text-sm font-semibold text-primary sm:self-auto">Ver todos los autos <ArrowUpRight size={16} /></Link>
+
+      <section className="editorial-grid mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-12 lg:py-32">
+        <div className="grid gap-8 lg:grid-cols-[.34fr_.66fr]">
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <p className="label-mono text-primary">Garage / 01</p>
+            <h2 className="display-serif mt-5 max-w-xs text-5xl leading-[.95] sm:text-6xl">La selección<br /><span className="italic">actual.</span></h2>
+            <p className="mt-6 max-w-xs text-sm leading-7 text-muted-foreground">Pocas unidades, elegidas con criterio. No buscamos llenar un catálogo.</p>
+            <Link href="/inventory" data-testid="link-home-all-inventory" className="mt-8 inline-flex items-center gap-3 border-b border-primary pb-2 text-xs font-bold uppercase tracking-[.12em] text-primary">Ver inventario completo <ArrowUpRight size={15} /></Link>
+          </div>
+          {featured.length === 0 ? <EmptyState label="Pronto agregaremos nuevos autos al inventario." /> : (
+            <div className="grid gap-5 lg:grid-cols-[1.25fr_.75fr]">
+              <HomeFeatureCard vehicle={featured[0]} />
+              <div className="grid gap-5">{featured.slice(1).map((vehicle) => <HomeFeatureCard key={vehicle.id} vehicle={vehicle} secondary />)}</div>
+            </div>
+          )}
         </div>
-        {featured.length === 0 ? <EmptyState label="Pronto agregaremos nuevos autos al inventario." /> : <div className="mt-10 grid gap-6 md:grid-cols-3">{featured.map((vehicle) => <VehicleCard key={vehicle.id} vehicle={vehicle} />)}</div>}
       </section>
-      <section className="border-y border-border bg-muted/45">
-        <div className="mx-auto grid max-w-[1440px] gap-10 px-5 py-16 sm:px-8 md:grid-cols-[.85fr_1.15fr] md:items-center lg:px-12 lg:py-24">
-          <div><p className="label-mono text-primary">Por qué Classics Mexico</p><h2 className="display-serif mt-4 max-w-md text-4xl leading-tight sm:text-5xl">Comprar un auto clásico, sin incertidumbre.</h2><p className="mt-6 max-w-md text-sm leading-7 text-muted-foreground">Revisamos cada auto, documentamos su historia y confirmamos su situación legal en México. Queremos que una compra emocionante también sea una compra clara.</p></div>
-          <div className="grid gap-px border border-border bg-border sm:grid-cols-2">
-              {[
-              { icon: ShieldCheck, title: 'Legalidad primero', text: 'Revisamos propiedad, condición y documentación antes de que un auto llegue a nuestro inventario.' },
-              { icon: Compass, title: 'Una mirada experta', text: 'Sin subastas anónimas ni historias incompletas. Sabemos por qué cada auto es especial.' },
-              { icon: Truck, title: 'Traslado en México', text: 'Coordinamos grúa, transporte nacional y cada entrega para que el auto llegue seguro a tu ciudad.' },
-              { icon: MessageCircle, title: 'Respuestas directas', text: 'Pregunta lo que necesites. Nuestra recomendación es clara, específica y honesta.' },
-            ].map(({ icon: Icon, title, text }) => <div key={title} className="bg-card p-6 sm:p-7"><Icon size={20} className="text-primary" /><h3 className="mt-8 font-semibold">{title}</h3><p className="mt-2 text-sm leading-6 text-muted-foreground">{text}</p></div>)}
+
+      <section className="relative border-y border-border bg-muted/50">
+        <p aria-hidden="true" className="absolute -right-8 top-4 select-none font-mono text-[clamp(5rem,15vw,14rem)] font-bold leading-none text-primary/[.045]">CLARIDAD</p>
+        <div className="relative mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+          <div className="grid gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-5"><p className="label-mono text-primary">El método / 02</p><h2 className="display-serif mt-5 max-w-lg text-5xl leading-[1.02] sm:text-6xl">La emoción está en manejarlo.<br /><span className="italic text-primary">No en adivinar.</span></h2></div>
+            <div className="flex items-end lg:col-span-4 lg:col-start-8"><p className="max-w-md text-base leading-8 text-muted-foreground">Revisamos cada auto, documentamos su historia y confirmamos su situación legal. Una compra especial también debe ser una compra clara.</p></div>
+          </div>
+          <div className="mt-16 grid border-t border-border sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { icon: ShieldCheck, title: 'Legalidad primero', text: 'Propiedad, condición y documentación revisadas antes de avanzar.' },
+              { icon: Compass, title: 'Criterio experto', text: 'Sabemos qué hace especial a cada auto y también qué señales evitar.' },
+              { icon: Truck, title: 'Traslado nacional', text: 'Coordinamos el movimiento seguro hasta la ciudad de destino.' },
+              { icon: MessageCircle, title: 'Respuesta directa', text: 'Recomendaciones específicas, claras y sin historias incompletas.' },
+            ].map(({ icon: Icon, title, text }, index) => <article key={title} className="group border-b border-border py-7 sm:px-6 sm:first:pl-0 lg:border-b-0 lg:border-r lg:last:border-r-0"><div className="flex items-center justify-between"><span className="font-mono text-xs text-primary">0{index + 1}</span><Icon size={18} className="text-primary transition group-hover:rotate-12" /></div><h3 className="display-serif mt-14 text-2xl">{title}</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">{text}</p></article>)}
           </div>
         </div>
       </section>
-      <section className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
-        <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end"><div><p className="label-mono text-primary">Entregados con cuidado</p><h2 className="display-serif mt-3 text-4xl sm:text-5xl">Entregas recientes</h2></div><Link href="/sold" data-testid="link-home-sold" className="ink-link inline-flex items-center gap-2 text-sm font-semibold text-primary">Ver autos vendidos <ArrowUpRight size={16} /></Link></div>
-        {soldItems.length === 0 ? <EmptyState label="Estamos actualizando nuestro archivo." /> : <div className="mt-10 grid gap-6 md:grid-cols-3">{soldItems.map((vehicle) => <SoldCard key={vehicle.id} vehicle={vehicle} />)}</div>}
-      </section>
+
       <section className="bg-secondary text-secondary-foreground">
-        <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
-          <p className="label-mono text-accent">Dos servicios, dos necesidades distintas</p>
-          <div className="mt-8 grid gap-px bg-white/15 md:grid-cols-2">
-            <div className="bg-secondary p-7 sm:p-10"><Truck size={24} className="text-accent" /><p className="label-mono mt-8 text-accent">Traslado nacional</p><h2 className="display-serif mt-3 text-4xl">Tu auto, de una ciudad a otra.</h2><p className="mt-5 max-w-lg text-sm leading-7 text-white/65">Para cualquier auto que necesites mover dentro de México. Coordinamos recolección, transporte y entrega.</p><Link href="/transport" data-testid="link-home-transport" className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-accent">Conocer traslado <ArrowRight size={16} /></Link></div>
-            <div className="bg-secondary p-7 sm:p-10"><Globe2 size={24} className="text-accent" /><p className="label-mono mt-8 text-accent">Importación</p><h2 className="display-serif mt-3 text-4xl">Lo encontramos. Lo traemos.</h2><p className="mt-5 max-w-lg text-sm leading-7 text-white/65">Buscamos el auto, revisamos su condición y nos encargamos del proceso para ponerlo en México.</p><Link href="/importacion" data-testid="link-home-import" className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-accent">Conocer importación <ArrowRight size={16} /></Link></div>
-          </div>
+        <div className="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+          <div className="grid items-end gap-8 md:grid-cols-2"><div><p className="label-mono text-accent">Archivo / 03</p><h2 className="display-serif mt-5 text-5xl leading-none sm:text-6xl">Ya están<br /><span className="italic text-accent">en buenas manos.</span></h2></div><div className="md:text-right"><Link href="/sold" data-testid="link-home-sold" className="inline-flex items-center gap-3 border-b border-accent pb-2 text-xs font-bold uppercase tracking-[.12em] text-accent">Abrir archivo de entregas <ArrowUpRight size={15} /></Link></div></div>
+          {soldItems.length === 0 ? <EmptyState label="Estamos actualizando nuestro archivo." /> : <div className="mt-12 grid gap-5 lg:grid-cols-[1.2fr_.8fr]"><HomeSoldCard vehicle={soldItems[0]} lead /><div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">{soldItems.slice(1).map((vehicle) => <HomeSoldCard key={vehicle.id} vehicle={vehicle} />)}</div></div>}
+        </div>
+      </section>
+
+      <section className="relative mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-12 lg:py-32">
+        <div className="mb-12 grid gap-6 lg:grid-cols-2"><div><p className="label-mono text-primary">Rutas / 04</p><h2 className="display-serif mt-5 text-5xl sm:text-6xl">Dos caminos.<br /><span className="italic">Un mismo cuidado.</span></h2></div><p className="max-w-md self-end text-sm leading-7 text-muted-foreground lg:justify-self-end">Ya sea mover un auto dentro del país o traer uno desde fuera, cada proceso tiene su propia ruta.</p></div>
+        <div className="grid gap-5 lg:grid-cols-12">
+          <Link href="/transport" data-testid="link-home-transport" className="service-route group relative overflow-hidden bg-primary p-7 text-primary-foreground sm:p-10 lg:col-span-7 lg:min-h-[430px]">
+            <span className="absolute -right-4 -top-10 font-mono text-[10rem] leading-none text-white/[.06]">01</span>
+            <Truck size={25} className="text-accent" /><p className="label-mono mt-20 text-accent">Traslado nacional</p><h3 className="display-serif mt-4 max-w-lg text-4xl sm:text-5xl">Tu auto, de una ciudad a otra.</h3><p className="mt-6 max-w-lg text-sm leading-7 text-white/65">Recolección, transporte y entrega coordinados dentro de México.</p><span className="absolute bottom-8 right-8 flex h-14 w-14 items-center justify-center rounded-full border border-white/35 transition group-hover:rotate-45 group-hover:bg-accent group-hover:text-accent-foreground"><ArrowUpRight /></span>
+          </Link>
+          <Link href="/importacion" data-testid="link-home-import" className="service-route group relative overflow-hidden border border-border bg-card p-7 sm:p-10 lg:col-span-5 lg:mt-20 lg:min-h-[430px]">
+            <span className="absolute -right-4 -top-10 font-mono text-[10rem] leading-none text-primary/[.05]">02</span>
+            <Globe2 size={25} className="text-primary" /><p className="label-mono mt-20 text-primary">Importación</p><h3 className="display-serif mt-4 max-w-md text-4xl sm:text-5xl">Lo encontramos. Lo traemos.</h3><p className="mt-6 max-w-md text-sm leading-7 text-muted-foreground">Búsqueda, inspección, aduana, legalización y entrega en México.</p><span className="absolute bottom-8 right-8 flex h-14 w-14 items-center justify-center rounded-full border border-primary/35 text-primary transition group-hover:rotate-45 group-hover:bg-primary group-hover:text-primary-foreground"><ArrowUpRight /></span>
+          </Link>
         </div>
       </section>
     </div>
