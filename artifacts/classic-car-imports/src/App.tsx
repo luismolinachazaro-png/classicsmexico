@@ -218,6 +218,7 @@ function VehicleCard({ vehicle, compact = false }: { vehicle: Vehicle; compact?:
 
 function SoldCard({ vehicle }: { vehicle: SoldVehicle }) {
   const isPortraitCover = vehicle.imageUrl.includes('porsche-911-coupe-1975');
+  const isPorsche = vehicle.imageUrl.includes('porsche-911-coupe-1975');
   return (
     <Link href={`/sold/${vehicle.id}`} className="group block border border-border bg-card text-card-foreground transition hover:-translate-y-1 hover:shadow-xl" data-testid={`card-sold-${vehicle.id}`}>
       <div className={`relative overflow-hidden bg-secondary ${isPortraitCover ? 'aspect-[3/4]' : 'aspect-[4/3]'}`}>
@@ -225,9 +226,8 @@ function SoldCard({ vehicle }: { vehicle: SoldVehicle }) {
         <span className="absolute left-3 top-3 bg-secondary px-2 py-1 label-mono text-secondary-foreground">Vendido</span>
       </div>
       <div className="p-4">
-        <p className="label-mono text-muted-foreground">{vehicle.year}</p>
-        <div className="flex items-start justify-between gap-4"><h3 className="display-serif mt-2 text-xl">{vehicle.make} {vehicle.model}</h3><ArrowUpRight size={17} className="mt-3 shrink-0 text-primary transition group-hover:rotate-45" /></div>
-        {vehicle.description && <p className="mt-3 text-sm leading-6 text-muted-foreground">{vehicle.description}</p>}
+        <div className="flex items-start justify-between gap-4"><h3 className="display-serif text-xl">{vehicle.make} {vehicle.model} {vehicle.year}</h3><ArrowUpRight size={17} className="mt-1 shrink-0 text-primary transition group-hover:rotate-45" /></div>
+        {vehicle.description && !isPorsche && <p className="mt-3 text-sm leading-6 text-muted-foreground">{vehicle.description}</p>}
       </div>
     </Link>
   );
@@ -364,28 +364,18 @@ function EmptyState({ label }: { label: string }) {
 }
 
 function Inventory() {
-  const [search, setSearch] = useState('');
-  const [bodyStyle, setBodyStyle] = useState('');
-  const [sort, setSort] = useState<'featured' | 'newest' | 'price-low' | 'price-high'>('featured');
-  const params = useMemo(() => ({ ...(search ? { search } : {}), ...(bodyStyle ? { bodyStyle } : {}), sort }), [search, bodyStyle, sort]);
-  const query = useListInventory(params, { query: { queryKey: getListInventoryQueryKey(params) } });
   const sold = useListSoldVehicles(undefined, { query: { queryKey: getListSoldVehiclesQueryKey() } });
   const recentSold = useMemo(() => (sold.data ?? []).slice(0, 3), [sold.data]);
-  const bodyStyles = useMemo(() => Array.from(new Set((query.data ?? []).map((vehicle) => vehicle.bodyStyle))).sort(), [query.data]);
   return (
     <div className="page-enter">
       <section className="border-b border-border bg-muted/35">
         <div className="mx-auto max-w-[1440px] px-5 pb-12 pt-16 sm:px-8 lg:px-12 lg:pb-16 lg:pt-24"><p className="label-mono text-primary">Inventario actual</p><div className="mt-4 flex flex-col justify-between gap-6 md:flex-row md:items-end"><h1 className="display-serif text-5xl tracking-tight sm:text-7xl">Autos disponibles</h1><p className="max-w-sm text-sm leading-6 text-muted-foreground">Modelos especiales, información clara y un proceso definido para llevarlos a México.</p></div></div>
       </section>
-      <section className="mx-auto max-w-[1440px] px-5 py-10 sm:px-8 lg:px-12 lg:py-14">
-        <div className="flex flex-col gap-3 border border-border bg-card p-3 md:flex-row md:items-center">
-          <div className="relative min-w-0 flex-1"><Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={17} /><input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Busca marca, modelo o una característica…" aria-label="Buscar inventario" data-testid="input-inventory-search" className="w-full bg-transparent py-3 pl-10 pr-3 text-sm outline-none" /></div>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <label className="flex items-center gap-2 border border-border px-3 text-sm"><Filter size={15} className="text-primary" /><select value={bodyStyle} onChange={(e) => setBodyStyle(e.target.value)} aria-label="Filtrar por tipo de carrocería" data-testid="select-inventory-body-style" className="bg-transparent py-3 outline-none"><option value="">Todas las carrocerías</option>{bodyStyles.map((style) => <option key={style} value={style}>{style}</option>)}</select></label>
-            <label className="flex items-center gap-2 border border-border px-3 text-sm"><span className="text-muted-foreground">Ordenar</span><select value={sort} onChange={(e) => setSort(e.target.value as typeof sort)} aria-label="Ordenar inventario" data-testid="select-inventory-sort" className="bg-transparent py-3 outline-none"><option value="featured">Destacados primero</option><option value="newest">Más recientes</option><option value="price-low">Precio: menor a mayor</option><option value="price-high">Precio: mayor a menor</option></select></label>
-          </div>
+      <section className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
+        <div className="border-y border-border py-20 text-center">
+          <p className="display-serif text-5xl italic text-primary sm:text-6xl">Más por venir.</p>
+          <p className="mx-auto mt-5 max-w-md text-sm leading-7 text-muted-foreground">Estamos preparando nuevas unidades para el próximo capítulo de Classics Mexico.</p>
         </div>
-        {query.isLoading ? <LoadingState label="Revisando los autos disponibles…" /> : query.isError ? <ErrorState onRetry={() => void query.refetch()} /> : (query.data?.length ?? 0) === 0 ? <EmptyState label="No encontramos autos con esa búsqueda. Prueba con algo más general." /> : <><div className="mt-8 flex items-center justify-between"><p className="label-mono text-muted-foreground" data-testid="text-inventory-count">{query.data?.length} autos en el inventario</p>{(search || bodyStyle) && <button type="button" onClick={() => { setSearch(''); setBodyStyle(''); }} data-testid="button-clear-filters" className="text-xs font-semibold text-primary hover:underline">Limpiar filtros</button>}</div><div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">{query.data?.map((vehicle) => <VehicleCard key={vehicle.id} vehicle={vehicle} />)}</div></>}
       </section>
       <section className="border-t border-border bg-secondary text-secondary-foreground">
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
