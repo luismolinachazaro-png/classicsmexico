@@ -8,7 +8,6 @@ import {
   CircleAlert,
   Clock3,
   Compass,
-  Filter,
   Fuel,
   Gauge,
   Globe2,
@@ -26,14 +25,12 @@ import {
   getGetInventoryVehicleQueryKey,
   getGetSoldVehicleQueryKey,
   getGetSiteSummaryQueryKey,
-  getListInventoryQueryKey,
   getListServicesQueryKey,
   getListSoldVehiclesQueryKey,
   useCreateInquiry,
   useGetInventoryVehicle,
   useGetSoldVehicle,
   useGetSiteSummary,
-  useListInventory,
   useListServices,
   useListSoldVehicles,
 } from '@workspace/api-client-react';
@@ -331,16 +328,11 @@ function Home() {
       </section>
 
       <section className="editorial-grid mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
-        <div className="flex flex-col justify-between gap-7 md:flex-row md:items-end">
-          <div>
-            <p className="label-mono text-primary">Venta</p>
-            <h2 className="display-serif mt-5 text-5xl leading-[.95] sm:text-6xl">Clásicos <span className="italic">disponibles.</span></h2>
-            <p className="mt-5 max-w-xl text-sm leading-7 text-muted-foreground">Unidades seleccionadas, revisadas y listas para comenzar su siguiente historia en México.</p>
-          </div>
-        </div>
-        <div className="mt-14 border-y border-border py-16 text-center">
+        <div className="border-y border-border py-16 text-center">
           <p className="display-serif text-5xl italic text-primary sm:text-6xl">Más por venir.</p>
           <p className="mx-auto mt-5 max-w-md text-sm leading-7 text-muted-foreground">Estamos preparando nuevas unidades para el próximo capítulo de Classics Mexico.</p>
+          <p className="mx-auto mt-8 max-w-md text-sm leading-7 text-muted-foreground">Mientras tanto, revisa algunos de los clásicos que ya encontraron dueño.</p>
+          <Link href="/sold" data-testid="link-home-sold-archive" className="mt-6 inline-flex items-center gap-3 bg-primary px-5 py-3.5 text-xs font-bold uppercase tracking-[.12em] text-primary-foreground hover:bg-primary/90">Ver autos vendidos <ArrowUpRight size={15} /></Link>
         </div>
       </section>
 
