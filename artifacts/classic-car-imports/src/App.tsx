@@ -220,10 +220,11 @@ function VehicleCard({ vehicle, compact = false }: { vehicle: Vehicle; compact?:
 }
 
 function SoldCard({ vehicle }: { vehicle: SoldVehicle }) {
+  const isPortraitCover = vehicle.imageUrl.includes('porsche-911-coupe-1975');
   return (
     <Link href={`/sold/${vehicle.id}`} className="group block border border-border bg-card text-card-foreground transition hover:-translate-y-1 hover:shadow-xl" data-testid={`card-sold-${vehicle.id}`}>
-      <div className="relative aspect-[4/3] overflow-hidden bg-secondary">
-        <ImageFrame src={vehicle.imageUrl} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} fit="contain" className="h-full w-full transition-transform duration-700 group-hover:scale-105" />
+      <div className={`relative overflow-hidden bg-secondary ${isPortraitCover ? 'aspect-[3/4]' : 'aspect-[4/3]'}`}>
+        <ImageFrame src={vehicle.imageUrl} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} className="h-full w-full transition-transform duration-700 group-hover:scale-105" />
         <span className="absolute left-3 top-3 bg-secondary px-2 py-1 label-mono text-secondary-foreground">Vendido</span>
       </div>
       <div className="p-4">
@@ -288,32 +289,6 @@ function InquiryDialog({ triggerLabel, vehicleSlug, inquiryType = 'general', ful
   );
 }
 
-function HomeFeatureCard({ vehicle }: { vehicle: Vehicle }) {
-  return (
-    <Link
-      href={`/inventory/${vehicle.slug}`}
-      data-testid={`card-home-vehicle-${vehicle.id}`}
-      className="group relative block aspect-[4/3] overflow-hidden bg-secondary"
-    >
-      <ImageFrame src={vehicle.imageUrl} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} className="absolute inset-0 h-full w-full transition duration-700 group-hover:scale-[1.035]" />
-      <div className="absolute inset-0 bg-gradient-to-t from-secondary via-secondary/10 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-8">
-        <div className="flex items-end justify-between gap-5">
-          <div>
-            <p className="label-mono text-accent">{vehicle.year} · {vehicle.bodyStyle}</p>
-            <h3 className="display-serif mt-2 text-3xl leading-none">{vehicle.make}<br /><span className="italic">{vehicle.model}</span></h3>
-          </div>
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/50 transition group-hover:rotate-45 group-hover:bg-accent group-hover:text-accent-foreground"><ArrowUpRight size={19} /></span>
-        </div>
-        <div className="mt-5 flex items-center justify-between border-t border-white/25 pt-4 text-xs">
-          <span className="font-mono text-white/65">{vehicle.location} · {miles.format(vehicle.mileage)} MI</span>
-          <span className="font-semibold text-accent">{money.format(vehicle.price)} USD</span>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
 function HomeSoldCard({ vehicle, lead = false }: { vehicle: SoldVehicle; lead?: boolean }) {
   return (
     <article className={`group grid overflow-hidden border border-white/15 ${lead ? 'md:grid-cols-[1.25fr_.75fr]' : ''}`} data-testid={`card-home-sold-${vehicle.id}`}>
@@ -334,14 +309,9 @@ function HomeSoldCard({ vehicle, lead = false }: { vehicle: SoldVehicle; lead?: 
 }
 
 function Home() {
-  const inventory = useListInventory({ sort: 'featured' }, { query: { queryKey: getListInventoryQueryKey({ sort: 'featured' }) } });
   const summary = useGetSiteSummary({ query: { queryKey: getGetSiteSummaryQueryKey() } });
-  const featured = useMemo(() => {
-    const items = (inventory.data ?? []).slice(0, 3);
-    return items.length > 1 ? [items[1], items[0], ...items.slice(2)] : items;
-  }, [inventory.data]);
-  if (inventory.isLoading || summary.isLoading) return <LoadingState />;
-  if (inventory.isError || summary.isError) return <ErrorState onRetry={() => { void inventory.refetch(); void summary.refetch(); }} />;
+  if (summary.isLoading) return <LoadingState />;
+  if (summary.isError) return <ErrorState onRetry={() => void summary.refetch()} />;
   return (
     <div className="page-enter overflow-hidden">
       <section className="bg-secondary text-secondary-foreground">
@@ -368,9 +338,9 @@ function Home() {
             <p className="mt-5 max-w-xl text-sm leading-7 text-muted-foreground">Unidades seleccionadas, revisadas y listas para comenzar su siguiente historia en México.</p>
           </div>
         </div>
-        {featured.length === 0 ? <EmptyState label="Pronto agregaremos nuevos autos al inventario." /> : <div className="mt-10 grid gap-5 md:grid-cols-3">{featured.map((vehicle) => <HomeFeatureCard key={vehicle.id} vehicle={vehicle} />)}</div>}
-        <div className="mt-8 flex justify-center">
-          <Link href="/inventory" data-testid="link-home-all-inventory" className="inline-flex items-center gap-3 border-b border-primary pb-2 text-xs font-bold uppercase tracking-[.12em] text-primary hover:text-primary/75">Ver todos los autos disponibles <ArrowUpRight size={15} /></Link>
+        <div className="mt-14 border-y border-border py-16 text-center">
+          <p className="display-serif text-5xl italic text-primary sm:text-6xl">Más por venir.</p>
+          <p className="mx-auto mt-5 max-w-md text-sm leading-7 text-muted-foreground">Estamos preparando nuevas unidades para el próximo capítulo de Classics Mexico.</p>
         </div>
       </section>
 
@@ -490,7 +460,7 @@ function SoldDetail() {
               <p className="mt-8 text-base leading-8 text-secondary-foreground/75">{vehicle.description ?? `Un ${vehicle.make} ${vehicle.model} de ${vehicle.year} que ya forma parte de una nueva colección.`}</p>
             </div>
             <div className="overflow-hidden border border-white/15 bg-primary">
-              <ImageFrame src={vehicle.imageUrl} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} fit="contain" className="aspect-[4/3] h-full w-full" />
+              <ImageFrame src={vehicle.imageUrl} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} className="aspect-[3/4] h-full w-full" />
             </div>
           </div>
         </div>
