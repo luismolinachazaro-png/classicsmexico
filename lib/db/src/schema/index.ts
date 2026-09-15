@@ -32,6 +32,8 @@ export const soldVehiclesTable = pgTable("sold_vehicles", {
   soldDate: text("sold_date").notNull(),
   imageUrl: text("image_url").notNull(),
   location: text("location").notNull(),
+  mileageKm: integer("mileage_km"),
+  description: text("description"),
 });
 
 export const inquiriesTable = pgTable("inquiries", {

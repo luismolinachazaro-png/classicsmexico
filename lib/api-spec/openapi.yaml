@@ -187,6 +187,8 @@ components:
         soldDate: { type: string }
         imageUrl: { type: string }
         location: { type: string }
+        mileageKm: { type: ["number", "null"] }
+        description: { type: ["string", "null"] }
     ImportService:
       type: object
       required: [id, name, description, details]

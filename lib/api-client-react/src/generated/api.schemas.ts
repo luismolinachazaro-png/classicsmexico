@@ -34,6 +34,10 @@ export interface SoldVehicle {
   soldDate: string;
   imageUrl: string;
   location: string;
+  /** @nullable */
+  mileageKm?: number | null;
+  /** @nullable */
+  description?: string | null;
 }
 
 export interface ImportService {

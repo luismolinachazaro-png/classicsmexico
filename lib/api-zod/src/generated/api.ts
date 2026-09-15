@@ -84,7 +84,9 @@ export const ListSoldVehiclesResponseItem = zod.object({
   "model": zod.string(),
   "soldDate": zod.string(),
   "imageUrl": zod.string(),
-  "location": zod.string()
+  "location": zod.string(),
+  "mileageKm": zod.number().nullish(),
+  "description": zod.string().nullish()
 })
 export const ListSoldVehiclesResponse = zod.array(ListSoldVehiclesResponseItem)
 

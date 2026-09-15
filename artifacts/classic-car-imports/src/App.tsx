@@ -221,12 +221,14 @@ function SoldCard({ vehicle }: { vehicle: SoldVehicle }) {
   return (
     <article className="group border border-border bg-card" data-testid={`card-sold-${vehicle.id}`}>
       <div className="relative aspect-[4/3] overflow-hidden bg-secondary">
-        <ImageFrame src={vehicle.imageUrl} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} className="h-full w-full grayscale transition-transform duration-700 group-hover:scale-105" />
+        <ImageFrame src={vehicle.imageUrl} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} className="h-full w-full transition-transform duration-700 group-hover:scale-105" />
         <span className="absolute left-3 top-3 bg-secondary px-2 py-1 label-mono text-secondary-foreground">Vendido</span>
       </div>
       <div className="p-4">
         <p className="label-mono text-muted-foreground">{vehicle.year} · {vehicle.location}</p>
         <h3 className="display-serif mt-2 text-xl">{vehicle.make} {vehicle.model}</h3>
+        {vehicle.description && <p className="mt-3 text-sm leading-6 text-muted-foreground">{vehicle.description}</p>}
+        {vehicle.mileageKm != null && <p className="mt-4 border-t border-border pt-3 font-mono text-xs text-primary">{miles.format(vehicle.mileageKm)} KM</p>}
         <p className="mt-4 text-xs text-muted-foreground">Vendido en {new Date(vehicle.soldDate).toLocaleDateString('es-MX', { month: 'short', year: 'numeric' })}</p>
       </div>
     </article>
@@ -323,6 +325,7 @@ function HomeSoldCard({ vehicle, lead = false }: { vehicle: SoldVehicle; lead?: 
         <p className="label-mono text-accent">{vehicle.year} · {vehicle.location}</p>
         <div className={lead ? 'mt-20' : 'mt-12'}>
           <h3 className={`display-serif ${lead ? 'text-4xl' : 'text-3xl'}`}>{vehicle.make}<br /><span className="italic">{vehicle.model}</span></h3>
+          {vehicle.mileageKm != null && <p className="mt-4 font-mono text-xs text-white/65">{miles.format(vehicle.mileageKm)} KM</p>}
           <p className="mt-5 border-t border-white/15 pt-4 text-xs text-white/50">Vendido en {new Date(vehicle.soldDate).toLocaleDateString('es-MX', { month: 'long', year: 'numeric' })}</p>
         </div>
       </div>
