@@ -48,6 +48,7 @@ import { Link, Route, Switch, Router as WouterRouter, useLocation, useParams } f
 const queryClient = new QueryClient();
 const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
 const miles = new Intl.NumberFormat('en-US');
+const WHATSAPP_URL = 'https://wa.me/+15125664915';
 
 function Shell({ children }: { children: ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -249,9 +250,9 @@ function InquiryDialog({ triggerLabel, vehicleSlug, inquiryType = 'general', ful
   const close = () => { setOpen(false); setSubmitted(false); setForm({ name: '', email: '', phone: '', message: '' }); };
   return (
     <>
-      <button type="button" onClick={() => setOpen(true)} data-testid={`button-inquiry-${inquiryType}`} className={`${fullWidth ? 'w-full' : ''} inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground hover:-translate-y-0.5 hover:bg-primary/90`}>
-        {triggerLabel}<ArrowRight size={16} />
-      </button>
+      <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" data-testid={`button-inquiry-${inquiryType}`} className={`${fullWidth ? 'w-full' : ''} inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground hover:-translate-y-0.5 hover:bg-primary/90`}>
+        Contáctanos<ArrowUpRight size={16} />
+      </a>
       {open && (
         <div className="fixed inset-0 z-[60] overflow-y-auto bg-secondary/70 p-3 backdrop-blur-sm sm:p-5" role="dialog" aria-modal="true" aria-label="Iniciar conversación" data-testid="dialog-inquiry">
           <div className="mx-auto my-1 max-h-[calc(100dvh-1.5rem)] w-full max-w-xl overflow-y-auto overscroll-contain border border-border bg-card p-6 shadow-2xl sm:my-0 sm:max-h-[calc(100dvh-2.5rem)] sm:p-8">
@@ -346,7 +347,7 @@ function Home() {
       </section>
 
       <section className="mx-auto grid max-w-[1600px] gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[.8fr_1.2fr] lg:px-12 lg:py-28">
-        <div><p className="label-mono text-primary">Traslado</p><h2 className="display-serif mt-5 max-w-lg text-5xl leading-[1] sm:text-6xl">De una ciudad mexicana a otra.</h2><p className="mt-7 max-w-md text-sm leading-7 text-muted-foreground">Este servicio no depende de una compra o importación. Movemos cualquier vehículo dentro de México.</p><Link href="/transport" data-testid="link-home-transport" className="mt-8 inline-flex items-center gap-3 bg-primary px-5 py-4 text-xs font-bold uppercase tracking-[.12em] text-primary-foreground">Cotizar traslado <ArrowRight size={15} /></Link></div>
+        <div><p className="label-mono text-primary">Traslado</p><h2 className="display-serif mt-5 max-w-lg text-5xl leading-[1] sm:text-6xl">De una ciudad mexicana a otra.</h2><p className="mt-7 max-w-md text-sm leading-7 text-muted-foreground">Este servicio no depende de una compra o importación. Movemos cualquier vehículo dentro de México.</p><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" data-testid="link-home-transport" className="mt-8 inline-flex items-center gap-3 bg-primary px-5 py-4 text-xs font-bold uppercase tracking-[.12em] text-primary-foreground">Contáctanos <ArrowUpRight size={15} /></a></div>
         <div className="relative min-h-[390px] overflow-hidden bg-secondary">
           <div className="absolute inset-0 opacity-35 [background-image:linear-gradient(45deg,transparent_48%,hsl(var(--accent))_49%,hsl(var(--accent))_51%,transparent_52%)] [background-size:48px_48px]" />
           <div className="relative grid h-full content-between p-7 text-secondary-foreground sm:p-10">
@@ -456,7 +457,47 @@ function SoldArchive() {
 function Transport() {
   const services = useListServices({ query: { queryKey: getListServicesQueryKey() } });
   const transportService = ((services.data ?? []) as ImportService[]).filter((service) => service.id === 2);
-  return <div className="page-enter"><section className="bg-primary text-primary-foreground"><div className="mx-auto grid max-w-[1440px] gap-10 px-5 pb-16 pt-20 sm:px-8 md:grid-cols-[1.1fr_.9fr] md:items-end lg:px-12 lg:pb-24 lg:pt-28"><div><p className="label-mono text-accent">Traslado nacional</p><h1 className="display-serif mt-5 max-w-3xl text-5xl leading-[1.04] sm:text-7xl">Movemos tu auto<br /><span className="italic text-accent">dentro de México.</span></h1></div><p className="max-w-sm text-sm leading-7 text-primary-foreground/75">No importa si es clásico, nuevo o de uso diario. Coordinamos su recolección, traslado y entrega entre ciudades mexicanas.</p></div></section><section className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24"><div className="grid gap-10 md:grid-cols-[.7fr_1.3fr]"><div><p className="label-mono text-primary">De puerta a puerta</p><h2 className="display-serif mt-3 max-w-sm text-4xl">Tú nos dices dónde está y a dónde va.</h2><p className="mt-5 max-w-sm text-sm leading-7 text-muted-foreground">Con esa información definimos la ruta, el tipo de transporte y una fecha estimada de entrega.</p><div className="mt-8"><InquiryDialog triggerLabel="Cotizar un traslado" inquiryType="transport" /></div></div>{services.isLoading ? <div className="animate-pulse space-y-3"><div className="h-28 bg-muted" /></div> : services.isError ? <ErrorState onRetry={() => void services.refetch()} /> : transportService.length === 0 ? <EmptyState label="Podemos preparar una ruta a la medida." /> : <div className="grid gap-4">{transportService.map((service, index) => <ServiceRow key={service.id} service={service} index={index} />)}</div>}</div></section><section className="border-y border-border bg-muted/35"><div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 lg:px-12 lg:py-20"><p className="label-mono text-primary">Así funciona</p><div className="mt-10 grid gap-0 md:grid-cols-4">{[{icon: MapPin, title: '01 / Ubicación', text: 'Nos compartes dónde está el auto y cuál es su destino.'}, {icon: PackageCheck, title: '02 / Cotización', text: 'Definimos la ruta, el tipo de transporte y el costo.'}, {icon: Truck, title: '03 / Recolección', text: 'Recogemos el auto y te mantenemos al tanto del recorrido.'}, {icon: Check, title: '04 / Entrega', text: 'Entregamos en la ciudad acordada y confirmamos la recepción.'}].map(({ icon: Icon, title, text }, index) => <div key={title} className={`border-l border-border px-5 py-2 first:border-l-0 md:px-6 ${index === 0 ? 'pl-0' : ''}`}><Icon size={19} className="text-primary" /><h3 className="mt-7 font-mono text-xs text-primary">{title}</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">{text}</p></div>)}</div></div></section></div>;
+  return (
+    <div className="page-enter">
+      <section className="bg-primary text-primary-foreground">
+        <div className="mx-auto grid max-w-[1440px] gap-8 px-5 pb-12 pt-14 sm:px-8 md:grid-cols-[1.1fr_.9fr] md:items-center lg:px-12 lg:pb-16 lg:pt-20">
+          <div>
+            <p className="label-mono text-accent">Traslado nacional</p>
+            <h1 className="display-serif mt-5 max-w-3xl text-5xl leading-[1.04] sm:text-7xl">Movemos tu auto<br /><span className="italic text-accent">dentro de México.</span></h1>
+          </div>
+          <p className="max-w-sm text-sm leading-7 text-primary-foreground/75">No importa si es clásico, nuevo o de uso diario. Coordinamos su recolección, traslado y entrega entre ciudades mexicanas.</p>
+        </div>
+      </section>
+      <section className="mx-auto max-w-[1440px] px-5 py-14 sm:px-8 lg:px-12 lg:py-20">
+        <div className="grid gap-10 md:grid-cols-[.7fr_1.3fr]">
+          <div>
+            <p className="label-mono text-primary">De puerta a puerta</p>
+            <h2 className="display-serif mt-3 max-w-sm text-4xl">Tú nos dices dónde está y a dónde va.</h2>
+            <p className="mt-5 max-w-sm text-sm leading-7 text-muted-foreground">Con esa información definimos la ruta, el tipo de transporte y una fecha estimada de entrega.</p>
+            <div className="mt-8"><InquiryDialog triggerLabel="Cotizar un traslado" inquiryType="transport" /></div>
+          </div>
+          {services.isLoading ? <div className="animate-pulse space-y-3"><div className="h-28 bg-muted" /></div> : services.isError ? <ErrorState onRetry={() => void services.refetch()} /> : transportService.length === 0 ? <EmptyState label="Podemos preparar una ruta a la medida." /> : (
+            <div className="border-t border-border pt-6 md:border-l md:border-t-0 md:pl-10 md:pt-0">
+              <p className="label-mono text-primary">Servicio de traslado</p>
+              <h3 className="display-serif mt-3 text-3xl">{transportService[0].name}</h3>
+              <p className="mt-4 max-w-xl text-sm leading-7 text-muted-foreground">{transportService[0].description}</p>
+              <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+                {transportService[0].details.map((detail) => <li key={detail} className="flex gap-2 text-sm leading-6"><Check size={15} className="mt-1 shrink-0 text-primary" />{detail}</li>)}
+              </ul>
+            </div>
+          )}
+        </div>
+      </section>
+      <section className="border-y border-border bg-muted/35">
+        <div className="mx-auto max-w-[1440px] px-5 py-14 sm:px-8 lg:px-12 lg:py-18">
+          <p className="label-mono text-primary">Así funciona</p>
+          <div className="mt-8 grid gap-0 md:grid-cols-4">
+            {[{ icon: MapPin, title: 'Ubicación', text: 'Nos compartes dónde está el auto y cuál es su destino.' }, { icon: PackageCheck, title: 'Cotización', text: 'Definimos la ruta, el tipo de transporte y el costo.' }, { icon: Truck, title: 'Recolección', text: 'Recogemos el auto y te mantenemos al tanto del recorrido.' }, { icon: Check, title: 'Entrega', text: 'Entregamos en la ciudad acordada y confirmamos la recepción.' }].map(({ icon: Icon, title, text }, index) => <div key={title} className={`border-l border-border px-5 py-2 first:border-l-0 md:px-6 ${index === 0 ? 'pl-0' : ''}`}><Icon size={19} className="text-primary" /><h3 className="mt-7 font-mono text-xs text-primary">{title}</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">{text}</p></div>)}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
 }
 
 function Importation() {
