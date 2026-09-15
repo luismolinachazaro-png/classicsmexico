@@ -126,7 +126,7 @@ function Shell({ children }: { children: ReactNode }) {
               <Link href="/inventory" data-testid="link-footer-available" className="hover:text-accent">Venta de clásicos</Link>
               <Link href="/importacion" data-testid="link-footer-import" className="hover:text-accent">Importación</Link>
               <Link href="/transport" data-testid="link-footer-transport" className="hover:text-accent">Traslado nacional</Link>
-              <Link href="/sold" data-testid="link-footer-archive" className="text-secondary-foreground/45 hover:text-accent">Archivo de vendidos</Link>
+              <Link href="/inventory#sold-archive" data-testid="link-footer-archive" className="text-secondary-foreground/45 hover:text-accent">Archivo de vendidos</Link>
             </div>
           </div>
           <div>
@@ -332,7 +332,7 @@ function Home() {
           <p className="display-serif text-5xl italic text-primary sm:text-6xl">Más por venir.</p>
           <p className="mx-auto mt-5 max-w-md text-sm leading-7 text-muted-foreground">Estamos preparando nuevas unidades para el próximo capítulo de Classics Mexico.</p>
           <p className="mx-auto mt-8 max-w-md text-sm leading-7 text-muted-foreground">Mientras tanto, revisa algunos de los clásicos que ya encontraron dueño.</p>
-          <Link href="/sold" data-testid="link-home-sold-archive" className="mt-6 inline-flex items-center gap-3 bg-primary px-5 py-3.5 text-xs font-bold uppercase tracking-[.12em] text-primary-foreground hover:bg-primary/90">Ver autos vendidos <ArrowUpRight size={15} /></Link>
+          <Link href="/inventory" data-testid="link-home-sold-archive" className="mt-6 inline-flex items-center gap-3 bg-primary px-5 py-3.5 text-xs font-bold uppercase tracking-[.12em] text-primary-foreground hover:bg-primary/90">Ver autos vendidos <ArrowUpRight size={15} /></Link>
         </div>
       </section>
 
@@ -368,20 +368,16 @@ function Inventory() {
   const recentSold = useMemo(() => (sold.data ?? []).slice(0, 3), [sold.data]);
   return (
     <div className="page-enter">
-      <section className="border-b border-border bg-muted/35">
-        <div className="mx-auto max-w-[1440px] px-5 pb-12 pt-16 sm:px-8 lg:px-12 lg:pb-16 lg:pt-24"><p className="label-mono text-primary">Inventario actual</p><div className="mt-4 flex flex-col justify-between gap-6 md:flex-row md:items-end"><h1 className="display-serif text-5xl tracking-tight sm:text-7xl">Autos disponibles</h1><p className="max-w-sm text-sm leading-6 text-muted-foreground">Modelos especiales, información clara y un proceso definido para llevarlos a México.</p></div></div>
-      </section>
       <section className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
         <div className="border-y border-border py-20 text-center">
           <p className="display-serif text-5xl italic text-primary sm:text-6xl">Más por venir.</p>
           <p className="mx-auto mt-5 max-w-md text-sm leading-7 text-muted-foreground">Estamos preparando nuevas unidades para el próximo capítulo de Classics Mexico.</p>
         </div>
       </section>
-      <section className="border-t border-border bg-secondary text-secondary-foreground">
+      <section id="sold-archive" className="border-t border-border bg-secondary text-secondary-foreground">
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
           <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
             <div><p className="label-mono text-accent">Archivo de vendidos</p><h2 className="display-serif mt-4 text-4xl sm:text-5xl">Clásicos que ya encontraron dueño.</h2></div>
-            <Link href="/sold" data-testid="link-inventory-sold-archive" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[.12em] text-accent">Ver archivo completo <ArrowUpRight size={15} /></Link>
           </div>
           {sold.isLoading ? <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{[1, 2, 3].map((item) => <div key={item} className="h-72 animate-pulse bg-white/10" />)}</div> : sold.isError ? <p className="mt-8 text-sm text-secondary-foreground/60">El archivo está temporalmente fuera de servicio.</p> : recentSold.length === 0 ? <p className="mt-8 text-sm text-secondary-foreground/60">Pronto agregaremos autos a este archivo.</p> : <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{recentSold.map((vehicle) => <SoldCard key={vehicle.id} vehicle={vehicle} />)}</div>}
         </div>
