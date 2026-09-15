@@ -82,10 +82,16 @@ function Shell({ children }: { children: ReactNode }) {
               </Link>
             ))}
           </nav>
-          <div className="hidden items-center gap-3 md:flex">
-            <span className="h-2 w-2 rounded-full bg-accent" />
-            <span className="label-mono text-muted-foreground">México / USA / Europa</span>
-          </div>
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noreferrer"
+            data-testid="link-header-contact"
+            className="hidden items-center gap-2 bg-primary px-4 py-2 text-xs font-semibold uppercase tracking-[.12em] text-primary-foreground hover:bg-primary/90 md:inline-flex"
+          >
+            <MessageCircle size={15} />
+            Contáctanos
+          </a>
           <button
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
