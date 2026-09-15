@@ -461,8 +461,6 @@ function SoldArchive() {
 }
 
 function Transport() {
-  const services = useListServices({ query: { queryKey: getListServicesQueryKey() } });
-  const transportService = ((services.data ?? []) as ImportService[]).filter((service) => service.id === 2);
   return (
     <div className="page-enter">
       <section className="bg-primary text-primary-foreground">
@@ -475,23 +473,13 @@ function Transport() {
         </div>
       </section>
       <section className="mx-auto max-w-[1440px] px-5 py-14 sm:px-8 lg:px-12 lg:py-20">
-        <div className="grid gap-10 md:grid-cols-[.7fr_1.3fr]">
+        <div className="max-w-md">
           <div>
             <p className="label-mono text-primary">De puerta a puerta</p>
             <h2 className="display-serif mt-3 max-w-sm text-4xl">Tú nos dices dónde está y a dónde va.</h2>
             <p className="mt-5 max-w-sm text-sm leading-7 text-muted-foreground">Con esa información definimos la ruta, el tipo de transporte y una fecha estimada de entrega.</p>
             <div className="mt-8"><InquiryDialog triggerLabel="Cotizar un traslado" inquiryType="transport" /></div>
           </div>
-          {services.isLoading ? <div className="animate-pulse space-y-3"><div className="h-28 bg-muted" /></div> : services.isError ? <ErrorState onRetry={() => void services.refetch()} /> : transportService.length === 0 ? <EmptyState label="Podemos preparar una ruta a la medida." /> : (
-            <div className="border-t border-border pt-6 md:border-l md:border-t-0 md:pl-10 md:pt-0">
-              <p className="label-mono text-primary">Servicio de traslado</p>
-              <h3 className="display-serif mt-3 text-3xl">{transportService[0].name}</h3>
-              <p className="mt-4 max-w-xl text-sm leading-7 text-muted-foreground">{transportService[0].description}</p>
-              <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-                {transportService[0].details.map((detail) => <li key={detail} className="flex gap-2 text-sm leading-6"><Check size={15} className="mt-1 shrink-0 text-primary" />{detail}</li>)}
-              </ul>
-            </div>
-          )}
         </div>
       </section>
       <section className="border-y border-border bg-muted/35">
