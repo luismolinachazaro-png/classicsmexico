@@ -1,1 +1,2 @@
 - [API schema compatibility](api-schema-compatibility.md) — keep generated contracts compatible with the workspace's Zod runtime before wiring routes.
+- [Spanish brand copy](spanish-brand-copy.md) — always spell “México” with its accent in user-visible copy, including the Classics México name.

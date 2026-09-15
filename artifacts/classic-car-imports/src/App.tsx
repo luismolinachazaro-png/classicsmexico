@@ -67,7 +67,7 @@ function Shell({ children }: { children: ReactNode }) {
             <span className="h-8 w-px bg-border" />
             <span className="leading-none">
               <span className="block text-[11px] font-bold tracking-[.2em] text-foreground">CLASSICS</span>
-              <span className="mt-1 block text-[11px] font-bold tracking-[.2em] text-foreground">MEXICO</span>
+              <span className="mt-1 block text-[11px] font-bold tracking-[.2em] text-foreground">MÉXICO</span>
             </span>
           </Link>
           <nav className="mx-auto hidden items-center gap-1 md:flex" aria-label="Navegación principal">
@@ -97,7 +97,7 @@ function Shell({ children }: { children: ReactNode }) {
             target="_blank"
             rel="noreferrer"
             data-testid="link-mobile-contact"
-            className="mr-2 inline-flex items-center gap-1.5 bg-primary px-3 py-2 text-[10px] font-semibold uppercase tracking-[.1em] text-primary-foreground md:hidden"
+            className="mr-4 inline-flex items-center gap-1.5 bg-primary px-3 py-2 text-[10px] font-semibold uppercase tracking-[.1em] text-primary-foreground md:hidden"
           >
             <MessageCircle size={14} />
             Contáctanos
@@ -153,11 +153,11 @@ function Shell({ children }: { children: ReactNode }) {
           </div>
         </div>
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-12">
-          <p aria-hidden="true" className="pointer-events-none select-none whitespace-nowrap text-center text-[clamp(4rem,13vw,12rem)] font-bold leading-[.8] tracking-[-.075em] text-secondary-foreground/[.055]">CLASSICS MEXICO</p>
+          <p aria-hidden="true" className="pointer-events-none select-none whitespace-nowrap text-center text-[clamp(4rem,13vw,12rem)] font-bold leading-[.8] tracking-[-.075em] text-secondary-foreground/[.055]">CLASSICS MÉXICO</p>
         </div>
         <div className="border-t border-secondary-foreground/15 px-5 py-5 sm:px-8 lg:px-12">
           <div className="mx-auto flex max-w-[1600px] flex-col justify-between gap-2 text-[11px] text-secondary-foreground/45 sm:flex-row">
-            <span>© 2026 Classics Mexico. Autos clásicos.</span>
+            <span>© 2026 Classics México. Autos clásicos.</span>
             <span>Información clara en cada paso.</span>
           </div>
         </div>
@@ -234,8 +234,8 @@ function VehicleCard({ vehicle, compact = false }: { vehicle: Vehicle; compact?:
 }
 
 function SoldCard({ vehicle }: { vehicle: SoldVehicle }) {
-  const isPortraitCover = vehicle.imageUrl.includes('porsche-911-coupe-1975');
-  const isPorsche = vehicle.imageUrl.includes('porsche-911-coupe-1975');
+  const isPortraitCover = vehicle.imageUrl.includes('porsche-911-coupe-1975') || vehicle.imageUrl.includes('porsche-911-sc-targa-1978');
+  const isPorsche = vehicle.make === 'Porsche';
   return (
     <Link href={`/sold/${vehicle.id}`} className="group block border border-border bg-card text-card-foreground transition hover:-translate-y-1 hover:shadow-xl" data-testid={`card-sold-${vehicle.id}`}>
       <div className={`relative overflow-hidden bg-secondary ${isPortraitCover ? 'aspect-[3/4]' : 'aspect-[4/3]'}`}>
@@ -331,7 +331,7 @@ function Home() {
       <section className="bg-secondary text-secondary-foreground">
         <div className="mx-auto grid max-w-[1600px] lg:min-h-[690px] lg:grid-cols-[.9fr_1.1fr]">
           <div className="flex flex-col justify-between px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
-            <div><p className="label-mono text-accent">Classics Mexico</p><h1 className="display-serif mt-7 text-[clamp(3.8rem,7.5vw,8rem)] leading-[.86] tracking-[-.065em]">Tres formas<br />de vivir un<br /><span className="italic text-accent">gran auto.</span></h1></div>
+            <div><p className="label-mono text-accent">Classics México</p><h1 className="display-serif mt-7 text-[clamp(3.8rem,7.5vw,8rem)] leading-[.86] tracking-[-.065em]">Tres formas<br />de vivir un<br /><span className="italic text-accent">gran auto.</span></h1></div>
             <div className="mt-12 grid grid-cols-2 gap-6 border-t border-white/20 pt-5">
               <div><span className="display-serif block text-3xl text-accent">{summary.data?.yearsExperience ?? '—'}</span><span className="label-mono mt-1 block text-white/45">años de experiencia</span></div>
               <div><span className="display-serif block text-3xl text-accent">{summary.data?.statesCovered ?? '—'}</span><span className="label-mono mt-1 block text-white/45">estados cubiertos</span></div>
@@ -347,7 +347,7 @@ function Home() {
       <section className="editorial-grid mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
         <div className="border-y border-border py-16 text-center">
           <p className="display-serif text-5xl italic text-primary sm:text-6xl">Más por venir.</p>
-          <p className="mx-auto mt-5 max-w-md text-sm leading-7 text-muted-foreground">Estamos preparando nuevas unidades para el próximo capítulo de Classics Mexico.</p>
+          <p className="mx-auto mt-5 max-w-md text-sm leading-7 text-muted-foreground">Estamos preparando nuevas unidades para el próximo capítulo de Classics México.</p>
           <p className="mx-auto mt-8 max-w-md text-sm leading-7 text-muted-foreground">Mientras tanto, revisa algunos de los clásicos que ya encontraron dueño.</p>
           <Link href="/inventory" data-testid="link-home-sold-archive" className="mt-6 inline-flex items-center gap-3 bg-primary px-5 py-3.5 text-xs font-bold uppercase tracking-[.12em] text-primary-foreground hover:bg-primary/90">Ver autos vendidos <ArrowUpRight size={15} /></Link>
         </div>
@@ -388,7 +388,7 @@ function Inventory() {
       <section className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
         <div className="border-y border-border py-20 text-center">
           <p className="display-serif text-5xl italic text-primary sm:text-6xl">Más por venir.</p>
-          <p className="mx-auto mt-5 max-w-md text-sm leading-7 text-muted-foreground">Estamos preparando nuevas unidades para el próximo capítulo de Classics Mexico.</p>
+          <p className="mx-auto mt-5 max-w-md text-sm leading-7 text-muted-foreground">Estamos preparando nuevas unidades para el próximo capítulo de Classics México.</p>
         </div>
       </section>
       <section id="sold-archive" className="border-t border-border bg-secondary text-secondary-foreground">
@@ -518,12 +518,12 @@ function Seo() {
   const [location] = useLocation();
   useEffect(() => {
     const pages: Record<string, [string, string]> = {
-      '/': ['Classics Mexico — Autos clásicos importados', 'Autos clásicos seleccionados en Estados Unidos y Europa, legalizados y entregados en México.'],
-      '/inventory': ['Autos disponibles — Classics Mexico', 'Conoce autos clásicos importados, legalizados y disponibles para clientes en México.'],
-      '/transport': ['Traslado de autos en México — Classics Mexico', 'Movemos cualquier auto entre ciudades de México con recolección, seguimiento y entrega coordinada.'],
-      '/importacion': ['Importación de autos clásicos — Classics Mexico', 'Buscamos, revisamos e importamos autos clásicos desde Estados Unidos o Europa hasta México.'],
+      '/': ['Classics México — Autos clásicos importados', 'Autos clásicos seleccionados en Estados Unidos y Europa, legalizados y entregados en México.'],
+      '/inventory': ['Autos disponibles — Classics México', 'Conoce autos clásicos importados, legalizados y disponibles para clientes en México.'],
+      '/transport': ['Traslado de autos en México — Classics México', 'Movemos cualquier auto entre ciudades de México con recolección, seguimiento y entrega coordinada.'],
+      '/importacion': ['Importación de autos clásicos — Classics México', 'Buscamos, revisamos e importamos autos clásicos desde Estados Unidos o Europa hasta México.'],
     };
-    const [title, description] = pages[location] ?? ['Classics Mexico — Autos clásicos', 'Autos clásicos seleccionados, importados y legalizados para clientes en México.'];
+    const [title, description] = pages[location] ?? ['Classics México — Autos clásicos', 'Autos clásicos seleccionados, importados y legalizados para clientes en México.'];
     document.title = title;
     const meta = document.querySelector('meta[name="description"]') ?? document.createElement('meta');
     meta.setAttribute('name', 'description');
