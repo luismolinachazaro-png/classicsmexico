@@ -179,14 +179,14 @@ function ErrorState({ onRetry, label = 'No pudimos cargar esta página.' }: { on
   );
 }
 
-function ImageFrame({ src, alt, className = '' }: { src: string; alt: string; className?: string }) {
+function ImageFrame({ src, alt, className = '', fit = 'cover' }: { src: string; alt: string; className?: string; fit?: 'cover' | 'contain' }) {
   const [failed, setFailed] = useState(false);
   return failed ? (
     <div className={`flex items-center justify-center bg-secondary text-secondary-foreground ${className}`} data-testid="image-fallback">
       <span className="display-serif text-3xl italic opacity-50">CM</span>
     </div>
   ) : (
-    <img src={src} alt={alt} onError={() => setFailed(true)} className={`object-cover ${className}`} />
+    <img src={src} alt={alt} onError={() => setFailed(true)} className={`${fit === 'contain' ? 'object-contain' : 'object-cover'} ${className}`} />
   );
 }
 
@@ -221,17 +221,15 @@ function VehicleCard({ vehicle, compact = false }: { vehicle: Vehicle; compact?:
 
 function SoldCard({ vehicle }: { vehicle: SoldVehicle }) {
   return (
-    <Link href={`/sold/${vehicle.id}`} className="group block border border-border bg-card transition hover:-translate-y-1 hover:shadow-xl" data-testid={`card-sold-${vehicle.id}`}>
+    <Link href={`/sold/${vehicle.id}`} className="group block border border-border bg-card text-card-foreground transition hover:-translate-y-1 hover:shadow-xl" data-testid={`card-sold-${vehicle.id}`}>
       <div className="relative aspect-[4/3] overflow-hidden bg-secondary">
-        <ImageFrame src={vehicle.imageUrl} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} className="h-full w-full transition-transform duration-700 group-hover:scale-105" />
+        <ImageFrame src={vehicle.imageUrl} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} fit="contain" className="h-full w-full transition-transform duration-700 group-hover:scale-105" />
         <span className="absolute left-3 top-3 bg-secondary px-2 py-1 label-mono text-secondary-foreground">Vendido</span>
       </div>
       <div className="p-4">
         <p className="label-mono text-muted-foreground">{vehicle.year}</p>
         <div className="flex items-start justify-between gap-4"><h3 className="display-serif mt-2 text-xl">{vehicle.make} {vehicle.model}</h3><ArrowUpRight size={17} className="mt-3 shrink-0 text-primary transition group-hover:rotate-45" /></div>
         {vehicle.description && <p className="mt-3 text-sm leading-6 text-muted-foreground">{vehicle.description}</p>}
-        {vehicle.mileageKm != null && <p className="mt-4 border-t border-border pt-3 font-mono text-xs text-primary">{miles.format(vehicle.mileageKm)} KM</p>}
-        <p className="mt-4 text-xs text-muted-foreground">Vendido en {new Date(vehicle.soldDate).toLocaleDateString('es-MX', { month: 'short', year: 'numeric' })}</p>
       </div>
     </Link>
   );
@@ -490,10 +488,9 @@ function SoldDetail() {
               <h1 className="display-serif mt-5 text-5xl leading-[.95] sm:text-7xl">{vehicle.make}<br /><span className="italic text-accent">{vehicle.model}</span></h1>
               {vehicle.mileageKm != null && <p className="mt-8 border-t border-white/15 pt-5 font-mono text-sm text-secondary-foreground/75">{miles.format(vehicle.mileageKm)} KM</p>}
               <p className="mt-8 text-base leading-8 text-secondary-foreground/75">{vehicle.description ?? `Un ${vehicle.make} ${vehicle.model} de ${vehicle.year} que ya forma parte de una nueva colección.`}</p>
-              <div className="mt-8"><InquiryDialog triggerLabel="Buscar uno similar" inquiryType="general" /></div>
             </div>
             <div className="overflow-hidden border border-white/15 bg-primary">
-              <ImageFrame src={vehicle.imageUrl} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} className="aspect-[4/3] h-full w-full" />
+              <ImageFrame src={vehicle.imageUrl} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} fit="contain" className="aspect-[4/3] h-full w-full" />
             </div>
           </div>
         </div>
@@ -506,7 +503,7 @@ function SoldDetail() {
           <div className="mt-10 grid gap-5 md:grid-cols-2">
             {gallery.map((image, index) => (
               <div key={image} className={`${index === 0 || index % 5 === 0 ? 'md:col-span-2' : ''} overflow-hidden border border-border bg-card`}>
-                <ImageFrame src={image} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}, vista ${index + 1}`} className={`${index === 0 || index % 5 === 0 ? 'aspect-[16/9]' : 'aspect-[4/3]'} h-full w-full`} />
+                <ImageFrame src={image} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}, vista ${index + 1}`} fit="contain" className={`${index === 0 || index % 5 === 0 ? 'aspect-[16/9]' : 'aspect-[4/3]'} h-full w-full`} />
               </div>
             ))}
           </div>
