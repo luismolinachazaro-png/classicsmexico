@@ -423,7 +423,6 @@ function SoldDetail() {
   if (query.isError || !query.data) return <ErrorState onRetry={() => void query.refetch()} label="No pudimos encontrar este auto vendido." />;
 
   const vehicle = query.data;
-  const gallery = Array.from(new Set(vehicle.galleryUrls ?? []));
 
   return (
     <div className="page-enter">
@@ -432,8 +431,8 @@ function SoldDetail() {
           <Link href="/inventory#sold-archive" className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.12em] text-secondary-foreground/65 hover:text-accent"><ChevronLeft size={15} />Volver a autos vendidos</Link>
           <div className="mt-8 grid gap-10 lg:grid-cols-[.82fr_1.18fr] lg:items-center">
             <div>
-              <p className="label-mono text-accent">Vendido · {vehicle.year}</p>
-              <h1 className="display-serif mt-5 text-5xl leading-[.95] sm:text-7xl">{vehicle.make}<br /><span className="italic text-accent">{vehicle.model}</span></h1>
+              <p className="label-mono text-accent">Vendido</p>
+              <h1 className="display-serif mt-5 text-5xl leading-[.95] sm:text-7xl">{vehicle.make}<br /><span className="italic text-accent">{vehicle.model} {vehicle.year}</span></h1>
               {vehicle.mileageKm != null && <p className="mt-8 border-t border-white/15 pt-5 font-mono text-sm text-secondary-foreground/75">{miles.format(vehicle.mileageKm)} KM</p>}
               <p className="mt-8 text-base leading-8 text-secondary-foreground/75">{vehicle.description ?? `Un ${vehicle.make} ${vehicle.model} de ${vehicle.year} que ya forma parte de una nueva colección.`}</p>
             </div>
@@ -443,20 +442,6 @@ function SoldDetail() {
           </div>
         </div>
       </section>
-
-      {gallery.length > 0 && (
-        <section className="editorial-grid mx-auto max-w-[1440px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
-          <p className="label-mono text-primary">Galería</p>
-          <h2 className="display-serif mt-4 text-4xl sm:text-5xl">Todos los ángulos.</h2>
-          <div className="mt-10 grid gap-5 md:grid-cols-2">
-            {gallery.map((image, index) => (
-              <div key={image} className={`${index === 0 || index % 5 === 0 ? 'md:col-span-2' : ''} overflow-hidden border border-border bg-card`}>
-                <ImageFrame src={image} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}, vista ${index + 1}`} fit="contain" className={`${index === 0 || index % 5 === 0 ? 'aspect-[16/9]' : 'aspect-[4/3]'} h-full w-full`} />
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
     </div>
   );
 }
