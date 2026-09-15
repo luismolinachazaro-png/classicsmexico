@@ -61,7 +61,7 @@ function Shell({ children }: { children: ReactNode }) {
   return (
     <div className="site-grain min-h-[100dvh] bg-background text-foreground">
       <header className="sticky top-0 z-40 border-b border-foreground/15 bg-background/92 backdrop-blur-md">
-        <div className="mx-auto grid h-[82px] max-w-[1600px] grid-cols-[1fr_auto] items-center px-5 sm:px-8 md:grid-cols-[auto_1fr_auto] lg:px-12">
+        <div className="mx-auto grid h-[82px] max-w-[1600px] grid-cols-[1fr_auto_auto] items-center px-5 sm:px-8 md:grid-cols-[auto_1fr_auto] lg:px-12">
           <Link href="/" data-testid="link-home" className="group flex items-center gap-3">
             <span className="display-serif text-[2rem] italic leading-none text-primary">CM</span>
             <span className="h-8 w-px bg-border" />
@@ -90,6 +90,16 @@ function Shell({ children }: { children: ReactNode }) {
             className="hidden items-center gap-2 bg-primary px-4 py-2 text-xs font-semibold uppercase tracking-[.12em] text-primary-foreground hover:bg-primary/90 md:inline-flex"
           >
             <MessageCircle size={15} />
+            Contáctanos
+          </a>
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noreferrer"
+            data-testid="link-mobile-contact"
+            className="mr-2 inline-flex items-center gap-1.5 bg-primary px-3 py-2 text-[10px] font-semibold uppercase tracking-[.1em] text-primary-foreground md:hidden"
+          >
+            <MessageCircle size={14} />
             Contáctanos
           </a>
           <button
