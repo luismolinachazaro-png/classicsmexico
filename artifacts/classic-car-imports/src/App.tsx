@@ -286,12 +286,12 @@ function InquiryDialog({ triggerLabel, vehicleSlug, inquiryType = 'general', ful
   );
 }
 
-function HomeFeatureCard({ vehicle, secondary = false }: { vehicle: Vehicle; secondary?: boolean }) {
+function HomeFeatureCard({ vehicle }: { vehicle: Vehicle }) {
   return (
     <Link
       href={`/inventory/${vehicle.slug}`}
       data-testid={`card-home-vehicle-${vehicle.id}`}
-      className={`group relative block overflow-hidden bg-secondary ${secondary ? 'min-h-[340px]' : 'min-h-[520px] lg:min-h-[680px]'}`}
+      className="group relative block aspect-[4/3] overflow-hidden bg-secondary"
     >
       <ImageFrame src={vehicle.imageUrl} alt={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} className="absolute inset-0 h-full w-full transition duration-700 group-hover:scale-[1.035]" />
       <div className="absolute inset-0 bg-gradient-to-t from-secondary via-secondary/10 to-transparent" />
@@ -299,7 +299,7 @@ function HomeFeatureCard({ vehicle, secondary = false }: { vehicle: Vehicle; sec
         <div className="flex items-end justify-between gap-5">
           <div>
             <p className="label-mono text-accent">{vehicle.year} · {vehicle.bodyStyle}</p>
-            <h3 className={`display-serif mt-2 leading-none ${secondary ? 'text-3xl' : 'text-4xl sm:text-5xl'}`}>{vehicle.make}<br /><span className="italic">{vehicle.model}</span></h3>
+            <h3 className="display-serif mt-2 text-3xl leading-none">{vehicle.make}<br /><span className="italic">{vehicle.model}</span></h3>
           </div>
           <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/50 transition group-hover:rotate-45 group-hover:bg-accent group-hover:text-accent-foreground"><ArrowUpRight size={19} /></span>
         </div>
@@ -360,13 +360,13 @@ function Home() {
 
       <nav aria-label="Verticales de negocio" className="mx-auto grid max-w-[1600px] border-x border-border md:grid-cols-3">
         {[
-          { number: '01', title: 'Venta', text: 'Compra uno de nuestros clásicos disponibles y legalizados para México.', href: '/inventory', icon: ShieldCheck },
-          { number: '02', title: 'Importación', text: 'Encontramos y traemos el auto que buscas desde Estados Unidos o Europa.', href: '/importacion', icon: Globe2 },
-          { number: '03', title: 'Traslado', text: 'Movemos cualquier vehículo entre ciudades dentro de México.', href: '/transport', icon: Truck },
-        ].map(({ number, title, text, href, icon: Icon }) => (
+          { title: 'Venta', text: 'Compra uno de nuestros clásicos disponibles y legalizados para México.', href: '/inventory', icon: ShieldCheck },
+          { title: 'Importación', text: 'Encontramos y traemos el auto que buscas desde Estados Unidos o Europa.', href: '/importacion', icon: Globe2 },
+          { title: 'Traslado', text: 'Movemos cualquier vehículo entre ciudades dentro de México.', href: '/transport', icon: Truck },
+        ].map(({ title, text, href, icon: Icon }) => (
           <Link key={title} href={href} className="group border-b border-border p-7 md:border-b-0 md:border-r md:last:border-r-0 lg:p-10">
-            <div className="flex items-center justify-between"><span className="label-mono text-primary">{number}</span><Icon size={20} className="text-primary" /></div>
-            <h2 className="display-serif mt-12 text-4xl">{title}</h2>
+            <Icon size={21} className="text-primary" />
+            <h2 className="display-serif mt-10 text-4xl">{title}</h2>
             <p className="mt-4 min-h-14 max-w-sm text-sm leading-7 text-muted-foreground">{text}</p>
             <span className="mt-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[.12em] text-primary">Conocer {title.toLowerCase()} <ArrowRight size={15} className="transition group-hover:translate-x-1" /></span>
           </Link>
@@ -374,23 +374,23 @@ function Home() {
       </nav>
 
       <section className="editorial-grid mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
-        <div className="grid gap-10 lg:grid-cols-[.3fr_.7fr]">
+        <div className="flex flex-col justify-between gap-7 md:flex-row md:items-end">
           <div>
-            <p className="label-mono text-primary">01 / Venta</p>
-            <h2 className="display-serif mt-5 text-5xl leading-[.95] sm:text-6xl">Clásicos<br /><span className="italic">disponibles.</span></h2>
-            <p className="mt-6 max-w-xs text-sm leading-7 text-muted-foreground">Unidades seleccionadas, revisadas y listas para comenzar su siguiente historia en México.</p>
-            <div className="mt-8 flex flex-col items-start gap-4">
+            <p className="label-mono text-primary">Venta</p>
+            <h2 className="display-serif mt-5 text-5xl leading-[.95] sm:text-6xl">Clásicos <span className="italic">disponibles.</span></h2>
+            <p className="mt-5 max-w-xl text-sm leading-7 text-muted-foreground">Unidades seleccionadas, revisadas y listas para comenzar su siguiente historia en México.</p>
+          </div>
+          <div className="flex shrink-0 flex-col items-start gap-4 md:items-end">
               <Link href="/inventory" data-testid="link-home-all-inventory" className="inline-flex items-center gap-3 border-b border-primary pb-2 text-xs font-bold uppercase tracking-[.12em] text-primary">Ver autos en venta <ArrowUpRight size={15} /></Link>
               <Link href="/sold" data-testid="link-home-sold" className="text-xs text-muted-foreground hover:text-primary">Consultar archivo de vendidos</Link>
-            </div>
           </div>
-          {featured.length === 0 ? <EmptyState label="Pronto agregaremos nuevos autos al inventario." /> : <div className="grid gap-5 lg:grid-cols-[1.2fr_.8fr]"><HomeFeatureCard vehicle={featured[0]} /><div className="grid gap-5">{featured.slice(1).map((vehicle) => <HomeFeatureCard key={vehicle.id} vehicle={vehicle} secondary />)}</div></div>}
         </div>
+        {featured.length === 0 ? <EmptyState label="Pronto agregaremos nuevos autos al inventario." /> : <div className="mt-10 grid gap-5 md:grid-cols-3">{featured.map((vehicle) => <HomeFeatureCard key={vehicle.id} vehicle={vehicle} />)}</div>}
       </section>
 
       <section className="bg-primary text-primary-foreground">
         <div className="mx-auto grid max-w-[1600px] gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[.8fr_1.2fr] lg:px-12 lg:py-28">
-          <div><p className="label-mono text-accent">02 / Importación</p><h2 className="display-serif mt-5 max-w-lg text-5xl leading-[1] sm:text-6xl">El auto que buscas puede estar fuera de México.</h2><p className="mt-7 max-w-md text-sm leading-7 text-white/65">Nos encargamos de encontrarlo, revisarlo y traerlo legalmente desde Estados Unidos o Europa.</p><Link href="/importacion" data-testid="link-home-import" className="mt-8 inline-flex items-center gap-3 bg-accent px-5 py-4 text-xs font-bold uppercase tracking-[.12em] text-accent-foreground">Conocer importación <ArrowRight size={15} /></Link></div>
+          <div><p className="label-mono text-accent">Importación</p><h2 className="display-serif mt-5 max-w-lg text-5xl leading-[1] sm:text-6xl">El auto que buscas puede estar fuera de México.</h2><p className="mt-7 max-w-md text-sm leading-7 text-white/65">Nos encargamos de encontrarlo, revisarlo y traerlo legalmente desde Estados Unidos o Europa.</p><Link href="/importacion" data-testid="link-home-import" className="mt-8 inline-flex items-center gap-3 bg-accent px-5 py-4 text-xs font-bold uppercase tracking-[.12em] text-accent-foreground">Conocer importación <ArrowRight size={15} /></Link></div>
           <div className="grid border-t border-white/25 sm:grid-cols-2">
             {['Búsqueda y selección', 'Inspección del vehículo', 'Aduana y legalización', 'Entrega en México'].map((item, index) => <div key={item} className="border-b border-white/20 py-7 sm:px-6 sm:odd:border-r"><span className="font-mono text-xs text-accent">0{index + 1}</span><h3 className="display-serif mt-8 text-2xl">{item}</h3></div>)}
           </div>
@@ -398,12 +398,12 @@ function Home() {
       </section>
 
       <section className="mx-auto grid max-w-[1600px] gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[.8fr_1.2fr] lg:px-12 lg:py-28">
-        <div><p className="label-mono text-primary">03 / Traslado</p><h2 className="display-serif mt-5 max-w-lg text-5xl leading-[1] sm:text-6xl">De una ciudad mexicana a otra.</h2><p className="mt-7 max-w-md text-sm leading-7 text-muted-foreground">Este servicio no depende de una compra o importación. Movemos cualquier vehículo dentro de México.</p><Link href="/transport" data-testid="link-home-transport" className="mt-8 inline-flex items-center gap-3 bg-primary px-5 py-4 text-xs font-bold uppercase tracking-[.12em] text-primary-foreground">Cotizar traslado <ArrowRight size={15} /></Link></div>
+        <div><p className="label-mono text-primary">Traslado</p><h2 className="display-serif mt-5 max-w-lg text-5xl leading-[1] sm:text-6xl">De una ciudad mexicana a otra.</h2><p className="mt-7 max-w-md text-sm leading-7 text-muted-foreground">Este servicio no depende de una compra o importación. Movemos cualquier vehículo dentro de México.</p><Link href="/transport" data-testid="link-home-transport" className="mt-8 inline-flex items-center gap-3 bg-primary px-5 py-4 text-xs font-bold uppercase tracking-[.12em] text-primary-foreground">Cotizar traslado <ArrowRight size={15} /></Link></div>
         <div className="relative min-h-[390px] overflow-hidden bg-secondary">
           <div className="absolute inset-0 opacity-35 [background-image:linear-gradient(45deg,transparent_48%,hsl(var(--accent))_49%,hsl(var(--accent))_51%,transparent_52%)] [background-size:48px_48px]" />
           <div className="relative grid h-full content-between p-7 text-secondary-foreground sm:p-10">
             <div className="flex justify-between"><MapPin className="text-accent" /><span className="label-mono text-white/45">Cobertura nacional</span></div>
-            <div><p className="display-serif text-4xl sm:text-5xl">Recolección → Transporte → Entrega</p><p className="mt-5 max-w-lg text-sm leading-7 text-white/65">Coordinamos ruta, tipo de transporte y fecha estimada desde el origen hasta el destino.</p></div>
+            <div><p className="display-serif max-w-xl text-4xl sm:text-5xl">Movemos tu auto donde lo necesitas.</p><p className="mt-5 max-w-lg text-sm leading-7 text-white/65">Definimos la ruta y el tipo de transporte adecuado para llevarlo con seguridad a cualquier estado de México.</p><div className="mt-7 flex flex-wrap gap-2">{['Cobertura nacional', 'Transporte abierto o cerrado', 'Atención personalizada'].map((item) => <span key={item} className="border border-white/25 px-3 py-2 text-xs text-white/70">{item}</span>)}</div></div>
           </div>
         </div>
       </section>
