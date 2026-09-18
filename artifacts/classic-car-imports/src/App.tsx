@@ -332,7 +332,7 @@ function Home() {
             <h1 className="display-serif text-[clamp(3.6rem,6.5vw,7rem)] leading-[.9] tracking-[-.055em]">Autos únicos.<br /><span className="italic text-accent">Traídos con<br />propósito.</span></h1>
           </div>
           <div className="relative min-h-[430px] overflow-hidden">
-            <img src={`${import.meta.env.BASE_URL}images/landing-porsche-hq.webp`} alt="Porsche clásico blanco" className="absolute inset-0 h-full w-full scale-[1.28] object-cover object-[center_52%] lg:scale-[1.12]" />
+            <img src={`${import.meta.env.BASE_URL}images/landing-porsche-original.jpg`} alt="Porsche clásico blanco" className="absolute inset-0 h-full w-full object-cover object-[center_58%]" />
             <div className="absolute inset-0 bg-gradient-to-t from-secondary/55 via-transparent to-transparent" />
           </div>
         </div>
@@ -349,10 +349,13 @@ function Home() {
       </section>
 
       <section className="bg-primary text-primary-foreground">
-        <div className="mx-auto grid max-w-[1600px] gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[.8fr_1.2fr] lg:px-12 lg:py-28">
-          <div><p className="label-mono text-accent">Importación</p><h2 className="display-serif mt-5 max-w-lg text-5xl leading-[1] sm:text-6xl">El auto que buscas puede estar fuera de México.</h2><p className="mt-7 max-w-md text-sm leading-7 text-white/65">Nos encargamos de encontrarlo, revisarlo y traerlo legalmente desde Estados Unidos o Europa.</p><Link href="/importacion" data-testid="link-home-import" className="mt-8 inline-flex items-center gap-3 bg-accent px-5 py-4 text-xs font-bold uppercase tracking-[.12em] text-accent-foreground">Conocer importación <ArrowRight size={15} /></Link></div>
-          <div className="grid border-t border-white/25 sm:grid-cols-2">
-            {['Búsqueda y selección', 'Inspección del vehículo', 'Aduana y legalización', 'Entrega en México'].map((item, index) => <div key={item} className="border-b border-white/20 py-7 sm:px-6 sm:odd:border-r"><span className="font-mono text-xs text-accent">0{index + 1}</span><h3 className="display-serif mt-8 text-2xl">{item}</h3></div>)}
+        <div className="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+          <p className="label-mono text-center text-accent">Importación</p>
+          <div className="mt-10 grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
+            <div><h2 className="display-serif max-w-lg text-5xl leading-[1] sm:text-6xl">El auto que buscas puede estar fuera de México.</h2><p className="mt-7 max-w-md text-sm leading-7 text-white/65">Nos encargamos de encontrarlo, revisarlo y traerlo legalmente desde Estados Unidos o Europa.</p><Link href="/importacion" data-testid="link-home-import" className="mt-8 inline-flex items-center gap-3 bg-accent px-5 py-4 text-xs font-bold uppercase tracking-[.12em] text-accent-foreground">Conocer importación <ArrowRight size={15} /></Link></div>
+            <div className="grid border-t border-white/25 sm:grid-cols-2">
+              {['Búsqueda y selección', 'Inspección del vehículo', 'Aduana y legalización', 'Entrega en México'].map((item, index) => <div key={item} className="border-b border-white/20 py-7 sm:px-6 sm:odd:border-r"><span className="font-mono text-xs text-accent">0{index + 1}</span><h3 className="display-serif mt-8 text-2xl">{item}</h3></div>)}
+            </div>
           </div>
         </div>
       </section>
@@ -360,9 +363,9 @@ function Home() {
       <section className="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
         <div className="relative min-h-[390px] overflow-hidden bg-secondary">
           <div className="absolute inset-0 opacity-35 [background-image:linear-gradient(45deg,transparent_48%,hsl(var(--accent))_49%,hsl(var(--accent))_51%,transparent_52%)] [background-size:48px_48px]" />
-          <div className="relative grid h-full content-between p-7 text-secondary-foreground sm:p-10">
-            <div className="flex justify-between"><MapPin className="text-accent" /><span className="label-mono text-white/45">Traslado</span></div>
-            <div><p className="display-serif max-w-3xl text-4xl sm:text-5xl">Movemos tu auto a donde necesites.</p><p className="mt-5 max-w-3xl text-sm leading-7 text-white/65">Tu auto viaja solo, en caja cerrada, con ubicación en tiempo real y cobertura de seguro hasta 3 millones de pesos, a cualquier punto del país.</p></div>
+          <div className="relative flex min-h-[390px] flex-col p-7 text-secondary-foreground sm:p-10">
+            <p className="label-mono text-center text-white/45">Traslado</p>
+            <div className="mt-auto"><MapPin className="mb-5 text-accent" /><p className="display-serif max-w-3xl text-4xl sm:text-5xl">Movemos tu auto a donde necesites.</p><p className="mt-5 max-w-3xl text-sm leading-7 text-white/65">Tu auto viaja solo, en caja cerrada, con ubicación en tiempo real y cobertura de seguro hasta 3 millones de pesos, a cualquier punto del país.</p></div>
           </div>
         </div>
       </section>
