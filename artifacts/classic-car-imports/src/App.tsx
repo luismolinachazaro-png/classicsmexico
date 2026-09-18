@@ -329,10 +329,10 @@ function Home() {
       <section className="bg-secondary text-secondary-foreground">
         <div className="mx-auto grid max-w-[1600px] lg:min-h-[690px] lg:grid-cols-[.9fr_1.1fr]">
           <div className="flex items-center px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
-            <h1 className="display-serif text-[clamp(3.8rem,7.5vw,8rem)] leading-[.86] tracking-[-.065em]">Tres formas<br />de vivir un<br /><span className="italic text-accent">gran auto.</span></h1>
+            <h1 className="display-serif text-[clamp(3.6rem,6.5vw,7rem)] leading-[.9] tracking-[-.055em]">Autos únicos.<br /><span className="italic text-accent">Traídos con<br />propósito.</span></h1>
           </div>
           <div className="relative min-h-[430px] overflow-hidden">
-            <img src={`${import.meta.env.BASE_URL}images/porsche-hero.jpg`} alt="Auto clásico en movimiento" className="absolute inset-0 h-full w-full object-cover" />
+            <img src={`${import.meta.env.BASE_URL}images/landing-porsche.webp`} alt="Porsche clásico blanco" className="absolute inset-0 h-full w-full object-cover object-center" />
             <div className="absolute inset-0 bg-gradient-to-t from-secondary/55 via-transparent to-transparent" />
           </div>
         </div>
