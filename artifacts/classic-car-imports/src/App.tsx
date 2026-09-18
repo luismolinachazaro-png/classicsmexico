@@ -332,7 +332,7 @@ function Home() {
             <h1 className="display-serif text-[clamp(3.6rem,6.5vw,7rem)] leading-[.9] tracking-[-.055em]">Autos únicos.<br /><span className="italic text-accent">Traídos con<br />propósito.</span></h1>
           </div>
           <div className="relative min-h-[430px] overflow-hidden">
-            <img src={`${import.meta.env.BASE_URL}images/landing-porsche.webp`} alt="Porsche clásico blanco" className="absolute inset-0 h-full w-full object-cover object-center" />
+            <img src={`${import.meta.env.BASE_URL}images/landing-porsche-hq.webp`} alt="Porsche clásico blanco" className="absolute inset-0 h-full w-full scale-[1.28] object-cover object-[center_52%] lg:scale-[1.12]" />
             <div className="absolute inset-0 bg-gradient-to-t from-secondary/55 via-transparent to-transparent" />
           </div>
         </div>
@@ -340,6 +340,7 @@ function Home() {
 
       <section className="editorial-grid mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
         <div className="border-y border-border py-16 text-center">
+          <p className="label-mono text-primary">Venta</p>
           <p className="display-serif text-5xl italic text-primary sm:text-6xl">Más por venir.</p>
           <p className="mx-auto mt-5 max-w-md text-sm leading-7 text-muted-foreground">Estamos preparando nuevas unidades para el próximo capítulo de Classics México.</p>
           <p className="mx-auto mt-8 max-w-md text-sm leading-7 text-muted-foreground">Mientras tanto, revisa algunos de los clásicos que ya encontraron dueño.</p>
@@ -356,13 +357,12 @@ function Home() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-[1600px] gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[.8fr_1.2fr] lg:px-12 lg:py-28">
-        <div><p className="label-mono text-primary">Traslado</p><h2 className="display-serif mt-5 max-w-lg text-5xl leading-[1] sm:text-6xl">De una ciudad a otra.</h2><p className="mt-7 max-w-md text-sm leading-7 text-muted-foreground">Este servicio no depende de una compra o importación. Movemos cualquier vehículo dentro de México.</p><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" data-testid="link-home-transport" className="mt-8 inline-flex items-center gap-3 bg-primary px-5 py-4 text-xs font-bold uppercase tracking-[.12em] text-primary-foreground">Contáctanos <ArrowUpRight size={15} /></a></div>
+      <section className="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
         <div className="relative min-h-[390px] overflow-hidden bg-secondary">
           <div className="absolute inset-0 opacity-35 [background-image:linear-gradient(45deg,transparent_48%,hsl(var(--accent))_49%,hsl(var(--accent))_51%,transparent_52%)] [background-size:48px_48px]" />
           <div className="relative grid h-full content-between p-7 text-secondary-foreground sm:p-10">
-            <div className="flex justify-between"><MapPin className="text-accent" /><span className="label-mono text-white/45">Cobertura nacional</span></div>
-            <div><p className="display-serif max-w-xl text-4xl sm:text-5xl">Movemos tu auto donde lo necesitas.</p><p className="mt-5 max-w-lg text-sm leading-7 text-white/65">Definimos la ruta y el tipo de transporte adecuado para llevarlo con seguridad a cualquier estado de México.</p><div className="mt-7 flex flex-wrap gap-2">{['Cobertura nacional', 'Transporte abierto o cerrado', 'Atención personalizada'].map((item) => <span key={item} className="border border-white/25 px-3 py-2 text-xs text-white/70">{item}</span>)}</div></div>
+            <div className="flex justify-between"><MapPin className="text-accent" /><span className="label-mono text-white/45">Traslado</span></div>
+            <div><p className="display-serif max-w-3xl text-4xl sm:text-5xl">Movemos tu auto a donde necesites.</p><p className="mt-5 max-w-3xl text-sm leading-7 text-white/65">Tu auto viaja solo, en caja cerrada, con ubicación en tiempo real y cobertura de seguro hasta 3 millones de pesos, a cualquier punto del país.</p></div>
           </div>
         </div>
       </section>
