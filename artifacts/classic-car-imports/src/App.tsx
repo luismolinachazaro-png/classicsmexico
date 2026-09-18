@@ -331,8 +331,8 @@ function Home() {
         </div>
       </section>
 
-      <section className="editorial-grid mx-auto max-w-[1600px] px-5 pb-20 pt-8 sm:px-8 lg:px-12 lg:pb-28 lg:pt-12">
-        <div className="border-y border-border py-16 text-center">
+      <section className="editorial-grid mx-auto max-w-[1600px] px-5 pb-8 pt-8 sm:px-8 lg:px-12 lg:pb-12 lg:pt-12">
+        <div className="border-y border-border pb-10 pt-12 text-center lg:pb-12 lg:pt-16">
           <p className="label-mono text-primary">Venta</p>
           <p className="display-serif text-5xl italic text-primary sm:text-6xl">Más por venir.</p>
           <p className="mx-auto mt-5 max-w-md text-sm leading-7 text-muted-foreground">Estamos preparando nuevas unidades para el próximo capítulo de Classics México.</p>
@@ -495,11 +495,11 @@ function Transport() {
 function Importation() {
   const services = useListServices({ query: { queryKey: getListServicesQueryKey() } });
   const importServices = ((services.data ?? []) as ImportService[]).filter((service) => service.id !== 2);
-  return <div className="page-enter"><section className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24"><div className="grid gap-10 md:grid-cols-[.7fr_1.3fr]"><div><p className="label-mono text-primary">Nos encargamos del proceso</p><h1 className="display-serif mt-3 max-w-sm text-4xl">No necesitas convertirte en experto en importaciones.</h1><p className="mt-5 max-w-sm text-sm leading-7 text-muted-foreground">Puedes llegar con una idea o con un auto ya localizado. Revisamos cada caso antes de avanzar y te explicamos costos, tiempos y riesgos con claridad.</p><div className="mt-8"><InquiryDialog triggerLabel="Quiero importar un auto" inquiryType="import" /></div></div>{services.isLoading ? <div className="animate-pulse space-y-3"><div className="h-28 bg-muted" /><div className="h-28 bg-muted" /></div> : services.isError ? <ErrorState onRetry={() => void services.refetch()} /> : importServices.length === 0 ? <EmptyState label="Cuéntanos qué auto tienes en mente." /> : <div className="grid gap-4">{importServices.map((service, index) => <ServiceRow key={service.id} service={service} index={index} />)}</div>}</div></section></div>;
+  return <div className="page-enter"><section className="mx-auto max-w-[1440px] px-5 py-16 text-center sm:px-8 lg:px-12 lg:py-24"><div className="mx-auto max-w-3xl"><p className="label-mono text-primary">Nos encargamos del proceso</p><h1 className="display-serif mt-3 text-4xl sm:text-5xl">No necesitas convertirte en experto en importaciones.</h1><p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-muted-foreground">Puedes llegar con una idea o con un auto ya localizado. Revisamos cada caso antes de avanzar y te explicamos costos, tiempos y riesgos con claridad.</p><div className="mt-8"><InquiryDialog triggerLabel="Quiero importar un auto" inquiryType="import" /></div></div><div className="mt-14">{services.isLoading ? <div className="animate-pulse space-y-3"><div className="h-28 bg-muted" /><div className="h-28 bg-muted" /></div> : services.isError ? <ErrorState onRetry={() => void services.refetch()} /> : importServices.length === 0 ? <EmptyState label="Cuéntanos qué auto tienes en mente." /> : <div className="grid gap-4 lg:grid-cols-3">{importServices.map((service, index) => <ServiceRow key={service.id} service={service} index={index} />)}</div>}</div></section></div>;
 }
 
 function ServiceRow({ service, index }: { service: ImportService; index: number }) {
-  return <article className="border border-border bg-card p-6 sm:p-8"><div className="flex items-start gap-5"><span className="font-mono text-sm text-primary">0{index + 1}</span><div className="flex-1"><h3 className="display-serif text-2xl">{service.name}</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">{service.description}</p>{service.details.length > 0 && <ul className="mt-6 grid gap-3 sm:grid-cols-2">{service.details.map((detail) => <li key={detail} className="flex gap-2 text-sm"><Check size={15} className="mt-0.5 shrink-0 text-primary" />{detail}</li>)}</ul>}</div></div></article>;
+  return <article className="border border-border bg-card p-6 text-center sm:p-8"><span className="font-mono text-sm text-primary">0{index + 1}</span><h3 className="display-serif mt-4 text-2xl">{service.name}</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">{service.description}</p>{service.details.length > 0 && <ul className="mt-6 grid gap-3">{service.details.map((detail) => <li key={detail} className="flex items-start justify-center gap-2 text-sm"><Check size={15} className="mt-0.5 shrink-0 text-primary" /><span>{detail}</span></li>)}</ul>}</article>;
 }
 
 function Seo() {
