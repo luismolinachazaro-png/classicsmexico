@@ -338,7 +338,7 @@ function Home() {
         </div>
       </section>
 
-      <section className="editorial-grid mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+      <section className="editorial-grid mx-auto max-w-[1600px] px-5 pb-20 pt-8 sm:px-8 lg:px-12 lg:pb-28 lg:pt-12">
         <div className="border-y border-border py-16 text-center">
           <p className="label-mono text-primary">Venta</p>
           <p className="display-serif text-5xl italic text-primary sm:text-6xl">Más por venir.</p>
@@ -351,11 +351,9 @@ function Home() {
       <section className="bg-primary text-primary-foreground">
         <div className="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
           <p className="label-mono text-center text-accent">Importación</p>
-          <div className="mt-10 grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
-            <div><h2 className="display-serif max-w-lg text-5xl leading-[1] sm:text-6xl">El auto que buscas puede estar fuera de México.</h2><p className="mt-7 max-w-md text-sm leading-7 text-white/65">Nos encargamos de encontrarlo, revisarlo y traerlo legalmente desde Estados Unidos o Europa.</p><Link href="/importacion" data-testid="link-home-import" className="mt-8 inline-flex items-center gap-3 bg-accent px-5 py-4 text-xs font-bold uppercase tracking-[.12em] text-accent-foreground">Conocer importación <ArrowRight size={15} /></Link></div>
-            <div className="grid border-t border-white/25 sm:grid-cols-2">
-              {['Búsqueda y selección', 'Inspección del vehículo', 'Aduana y legalización', 'Entrega en México'].map((item, index) => <div key={item} className="border-b border-white/20 py-7 sm:px-6 sm:odd:border-r"><span className="font-mono text-xs text-accent">0{index + 1}</span><h3 className="display-serif mt-8 text-2xl">{item}</h3></div>)}
-            </div>
+          <div className="mx-auto mt-8 max-w-3xl text-center"><h2 className="display-serif text-5xl leading-[1] sm:text-6xl">El auto que buscas puede estar fuera de México.</h2><p className="mx-auto mt-7 max-w-xl text-sm leading-7 text-white/65">Nos encargamos de encontrarlo, revisarlo y traerlo legalmente desde Estados Unidos o Europa.</p><Link href="/importacion" data-testid="link-home-import" className="mt-8 inline-flex items-center gap-3 bg-accent px-5 py-4 text-xs font-bold uppercase tracking-[.12em] text-accent-foreground">Conocer importación <ArrowRight size={15} /></Link></div>
+          <div className="mt-14 grid border-t border-white/25 text-center sm:grid-cols-2 lg:grid-cols-4">
+            {['Búsqueda y selección', 'Inspección del vehículo', 'Aduana y legalización', 'Entrega en México'].map((item, index) => <div key={item} className="border-b border-white/20 px-4 py-7 sm:odd:border-r lg:border-r lg:last:border-r-0"><span className="font-mono text-xs text-accent">0{index + 1}</span><h3 className="display-serif mt-8 text-2xl">{item}</h3></div>)}
           </div>
         </div>
       </section>
@@ -365,7 +363,7 @@ function Home() {
           <div className="absolute inset-0 opacity-35 [background-image:linear-gradient(45deg,transparent_48%,hsl(var(--accent))_49%,hsl(var(--accent))_51%,transparent_52%)] [background-size:48px_48px]" />
           <div className="relative flex min-h-[390px] flex-col p-7 text-secondary-foreground sm:p-10">
             <p className="label-mono text-center text-white/45">Traslado</p>
-            <div className="mt-auto"><MapPin className="mb-5 text-accent" /><p className="display-serif max-w-3xl text-4xl sm:text-5xl">Movemos tu auto a donde necesites.</p><p className="mt-5 max-w-3xl text-sm leading-7 text-white/65">Tu auto viaja solo, en caja cerrada, con ubicación en tiempo real y cobertura de seguro hasta 3 millones de pesos, a cualquier punto del país.</p></div>
+            <div className="mx-auto mt-auto max-w-3xl text-center"><MapPin className="mx-auto mb-5 text-accent" /><p className="display-serif text-4xl sm:text-5xl">Movemos tu auto a donde necesites.</p><p className="mt-5 text-sm leading-7 text-white/65">Tu auto viaja solo, en caja cerrada, con ubicación en tiempo real y cobertura de seguro hasta 3 millones de pesos, a cualquier punto del país.</p></div>
           </div>
         </div>
       </section>
