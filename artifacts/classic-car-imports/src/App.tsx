@@ -132,7 +132,7 @@ function Shell({ children }: { children: ReactNode }) {
       <footer className="overflow-hidden bg-secondary text-secondary-foreground">
         <div className="mx-auto flex max-w-[1600px] flex-col items-center gap-12 px-5 pb-10 pt-16 text-center sm:px-8 lg:px-12 lg:pt-24">
           <div>
-            <p className="display-serif mx-auto max-w-xl text-4xl leading-tight sm:text-5xl">El siguiente clásico de México puede estar en cualquier parte del mundo.</p>
+            <p className="display-serif mx-auto max-w-xl text-4xl leading-tight sm:text-5xl">Tu siguiente clásico puede estar en cualquier parte del mundo.</p>
           </div>
           <div>
             <p className="label-mono text-accent">Tres verticales</p>
