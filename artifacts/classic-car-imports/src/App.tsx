@@ -130,10 +130,9 @@ function Shell({ children }: { children: ReactNode }) {
       </header>
       <main>{children}</main>
       <footer className="overflow-hidden bg-secondary text-secondary-foreground">
-        <div className="mx-auto grid max-w-[1600px] gap-12 px-5 pb-10 pt-16 sm:px-8 lg:grid-cols-[1.35fr_.65fr_.65fr] lg:px-12 lg:pt-24">
+        <div className="mx-auto grid max-w-[1600px] gap-12 px-5 pb-10 pt-16 sm:px-8 lg:grid-cols-[1.35fr_.65fr] lg:px-12 lg:pt-24">
           <div>
-            <p className="label-mono text-accent">Autos que merecen otra vida</p>
-            <p className="display-serif mt-5 max-w-xl text-4xl leading-tight sm:text-5xl">El siguiente clásico de México puede estar en cualquier parte del mundo.</p>
+            <p className="display-serif max-w-xl text-4xl leading-tight sm:text-5xl">El siguiente clásico de México puede estar en cualquier parte del mundo.</p>
           </div>
           <div>
             <p className="label-mono text-accent">Tres verticales</p>
@@ -141,13 +140,7 @@ function Shell({ children }: { children: ReactNode }) {
               <Link href="/inventory" data-testid="link-footer-available" className="hover:text-accent">Venta de clásicos</Link>
               <Link href="/importacion" data-testid="link-footer-import" className="hover:text-accent">Importación</Link>
               <Link href="/transport" data-testid="link-footer-transport" className="hover:text-accent">Traslado nacional</Link>
-              <Link href="/inventory#sold-archive" data-testid="link-footer-archive" className="text-secondary-foreground/45 hover:text-accent">Archivo de vendidos</Link>
             </div>
-          </div>
-          <div>
-            <p className="label-mono text-accent">Cobertura</p>
-            <p className="mt-4 text-sm leading-7 text-secondary-foreground/75">Atención en México<br />Ciudad de México · Monterrey · Guadalajara</p>
-            <p className="mt-4 font-mono text-xs text-secondary-foreground/50">LUN—VIE / 09:00—18:00 CST</p>
           </div>
         </div>
         <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-12">
@@ -363,7 +356,7 @@ function Home() {
           <div className="absolute inset-0 opacity-35 [background-image:linear-gradient(45deg,transparent_48%,hsl(var(--accent))_49%,hsl(var(--accent))_51%,transparent_52%)] [background-size:48px_48px]" />
           <div className="relative flex min-h-[390px] flex-col p-7 text-secondary-foreground sm:p-10">
             <p className="label-mono text-center text-white/45">Traslado</p>
-            <div className="mx-auto mt-auto max-w-3xl text-center"><MapPin className="mx-auto mb-5 text-accent" /><p className="display-serif text-4xl sm:text-5xl">Movemos tu auto a donde necesites.</p><p className="mt-5 text-sm leading-7 text-white/65">Tu auto viaja solo, en caja cerrada, con ubicación en tiempo real y cobertura de seguro hasta 3 millones de pesos, a cualquier punto del país.</p></div>
+            <div className="mx-auto mt-auto max-w-3xl text-center"><MapPin className="mx-auto mb-5 text-accent" /><p className="display-serif text-4xl sm:text-5xl">Movemos tu auto a donde necesites.</p><p className="mt-5 text-sm leading-7 text-white/65">Tu auto viaja solo, en caja cerrada, con ubicación en tiempo real y cobertura de seguro hasta 3 millones de pesos, a cualquier punto del país.</p><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" data-testid="link-home-transport" className="mt-8 inline-flex items-center gap-3 bg-accent px-5 py-4 text-xs font-bold uppercase tracking-[.12em] text-accent-foreground">Conocer traslado <ArrowUpRight size={15} /></a></div>
           </div>
         </div>
       </section>
