@@ -130,9 +130,9 @@ function Shell({ children }: { children: ReactNode }) {
       </header>
       <main>{children}</main>
       <footer className="overflow-hidden bg-secondary text-secondary-foreground">
-        <div className="mx-auto grid max-w-[1600px] gap-12 px-5 pb-10 pt-16 sm:px-8 lg:grid-cols-[1.35fr_.65fr] lg:px-12 lg:pt-24">
+        <div className="mx-auto flex max-w-[1600px] flex-col items-center gap-12 px-5 pb-10 pt-16 text-center sm:px-8 lg:px-12 lg:pt-24">
           <div>
-            <p className="display-serif max-w-xl text-4xl leading-tight sm:text-5xl">El siguiente clásico de México puede estar en cualquier parte del mundo.</p>
+            <p className="display-serif mx-auto max-w-xl text-4xl leading-tight sm:text-5xl">El siguiente clásico de México puede estar en cualquier parte del mundo.</p>
           </div>
           <div>
             <p className="label-mono text-accent">Tres verticales</p>
@@ -147,9 +147,10 @@ function Shell({ children }: { children: ReactNode }) {
           <p aria-hidden="true" className="pointer-events-none select-none whitespace-nowrap text-center text-[clamp(4rem,13vw,12rem)] font-bold leading-[.8] tracking-[-.075em] text-secondary-foreground/[.055]">CLASSICS MÉXICO</p>
         </div>
         <div className="border-t border-secondary-foreground/15 px-5 py-5 sm:px-8 lg:px-12">
-          <div className="mx-auto flex max-w-[1600px] flex-col justify-between gap-2 text-[11px] text-secondary-foreground/45 sm:flex-row">
+          <div className="mx-auto flex max-w-[1600px] flex-col items-center gap-2 text-center text-[11px] text-secondary-foreground/45">
             <span>© 2026 Classics México. Autos clásicos.</span>
             <span>Información clara en cada paso.</span>
+            <span>Monterrey, NL</span>
           </div>
         </div>
       </footer>
