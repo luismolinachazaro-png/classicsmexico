@@ -322,8 +322,11 @@ function Home() {
             <h1 className="display-serif text-[clamp(3.6rem,6.5vw,7rem)] leading-[.9] tracking-[-.055em]">Autos únicos.<br /><span className="italic text-accent">Traídos con<br />propósito.</span></h1>
           </div>
           <div className="relative min-h-[430px] overflow-hidden">
-            <img src={`${import.meta.env.BASE_URL}images/landing-porsche-original.jpg`} alt="Porsche clásico blanco" className="absolute inset-0 h-full w-full object-cover object-[center_58%]" />
-            <div className="absolute inset-0 bg-gradient-to-t from-secondary/55 via-transparent to-transparent" />
+            <picture className="absolute inset-0 block h-full w-full">
+              <source media="(max-width: 1023px)" srcSet={`${import.meta.env.BASE_URL}images/landing-porsche-mobile-hq.jpg`} />
+              <img src={`${import.meta.env.BASE_URL}images/landing-porsche-original.jpg`} alt="Porsche clásico blanco" className="h-full w-full object-cover object-[center_58%]" />
+            </picture>
+            <div className="absolute inset-0 hidden bg-gradient-to-t from-secondary/55 via-transparent to-transparent lg:block" />
           </div>
         </div>
       </section>
