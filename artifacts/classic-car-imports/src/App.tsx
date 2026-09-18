@@ -463,29 +463,25 @@ function Transport() {
   return (
     <div className="page-enter">
       <section className="bg-primary text-primary-foreground">
-        <div className="mx-auto grid max-w-[1440px] gap-8 px-5 pb-12 pt-14 sm:px-8 md:grid-cols-[1.1fr_.9fr] md:items-center lg:px-12 lg:pb-16 lg:pt-20">
-          <div>
-            <p className="label-mono text-accent">Traslado nacional</p>
-            <h1 className="display-serif mt-5 max-w-3xl text-5xl leading-[1.04] sm:text-7xl">Movemos tu auto<br /><span className="italic text-accent">dentro de México.</span></h1>
-          </div>
-          <p className="max-w-sm text-sm leading-7 text-primary-foreground/75">No importa si es clásico, nuevo o de uso diario. Coordinamos su recolección, traslado y entrega entre ciudades mexicanas.</p>
+        <div className="mx-auto max-w-[1440px] px-5 pb-12 pt-14 text-center sm:px-8 lg:px-12 lg:pb-16 lg:pt-20">
+          <p className="label-mono text-accent">Traslado nacional</p>
+          <h1 className="display-serif mx-auto mt-5 max-w-3xl text-5xl leading-[1.04] sm:text-7xl">Movemos tu auto<br /><span className="italic text-accent">dentro de México.</span></h1>
+          <p className="mx-auto mt-7 max-w-xl text-sm leading-7 text-primary-foreground/75">No importa si es clásico, nuevo o de uso diario. Coordinamos su recolección, traslado y entrega entre ciudades mexicanas.</p>
         </div>
       </section>
       <section className="mx-auto max-w-[1440px] px-5 py-14 sm:px-8 lg:px-12 lg:py-20">
-        <div className="max-w-md">
-          <div>
-            <p className="label-mono text-primary">De puerta a puerta</p>
-            <h2 className="display-serif mt-3 max-w-sm text-4xl">Tú nos dices dónde está y a dónde va.</h2>
-            <p className="mt-5 max-w-sm text-sm leading-7 text-muted-foreground">Con esa información definimos la ruta, el tipo de transporte y una fecha estimada de entrega.</p>
-            <div className="mt-8"><InquiryDialog triggerLabel="Cotizar un traslado" inquiryType="transport" /></div>
-          </div>
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="label-mono text-primary">De puerta a puerta</p>
+          <h2 className="display-serif mt-3 text-4xl">Tú nos dices dónde está y a dónde va.</h2>
+          <p className="mx-auto mt-5 max-w-lg text-sm leading-7 text-muted-foreground">Con esa información definimos la ruta, el tipo de transporte y una fecha estimada de entrega.</p>
+          <div className="mt-8"><InquiryDialog triggerLabel="Cotizar un traslado" inquiryType="transport" /></div>
         </div>
       </section>
       <section className="border-y border-border bg-muted/35">
-        <div className="mx-auto max-w-[1440px] px-5 py-14 sm:px-8 lg:px-12 lg:py-18">
+        <div className="mx-auto max-w-[1440px] px-5 py-14 text-center sm:px-8 lg:px-12 lg:py-18">
           <p className="label-mono text-primary">Así funciona</p>
           <div className="mt-8 grid gap-0 md:grid-cols-4">
-            {[{ icon: MapPin, title: 'Ubicación', text: 'Nos compartes dónde está el auto y cuál es su destino.' }, { icon: PackageCheck, title: 'Cotización', text: 'Definimos la ruta, el tipo de transporte y el costo.' }, { icon: Truck, title: 'Recolección', text: 'Recogemos el auto y te mantenemos al tanto del recorrido.' }, { icon: Check, title: 'Entrega', text: 'Entregamos en la ciudad acordada y confirmamos la recepción.' }].map(({ icon: Icon, title, text }, index) => <div key={title} className={`border-l border-border px-5 py-2 first:border-l-0 md:px-6 ${index === 0 ? 'pl-0' : ''}`}><Icon size={19} className="text-primary" /><h3 className="mt-7 font-mono text-xs text-primary">{title}</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">{text}</p></div>)}
+            {[{ icon: MapPin, title: 'Ubicación', text: 'Nos compartes dónde está el auto y cuál es su destino.' }, { icon: PackageCheck, title: 'Cotización', text: 'Definimos la ruta, el tipo de transporte y el costo.' }, { icon: Truck, title: 'Recolección', text: 'Recogemos el auto y te mantenemos al tanto del recorrido.' }, { icon: Check, title: 'Entrega', text: 'Entregamos en la ciudad acordada y confirmamos la recepción.' }].map(({ icon: Icon, title, text }) => <div key={title} className="border-t border-border px-5 py-7 first:border-t-0 md:border-l md:border-t-0 md:px-6 md:first:border-l-0"><Icon size={19} className="mx-auto text-primary" /><h3 className="mt-7 font-mono text-xs text-primary">{title}</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">{text}</p></div>)}
           </div>
         </div>
       </section>
